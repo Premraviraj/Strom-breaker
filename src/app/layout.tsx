@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Space_Grotesk, Oswald } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
@@ -30,12 +30,21 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+// Oswald for neo-brutalist theme - bold, condensed, aggressive
+const oswald = Oswald({
+  variable: "--font-brutalist",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Prem R - Full Stack Developer & AI Enthusiast",
   description: "Portfolio of Prem R - A passionate 3rd-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
   keywords: ["Prem R", "Full Stack Developer", "AI/ML", "React", "Next.js", "Python", "Portfolio"],
   authors: [{ name: "Prem R" }],
   creator: "Prem R",
+  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -59,7 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${spaceGrotesk.variable} antialiased min-h-screen bg-background font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${spaceGrotesk.variable} ${oswald.variable} antialiased min-h-screen bg-background font-sans`}
       >
         <ThemeProvider>
           {children}

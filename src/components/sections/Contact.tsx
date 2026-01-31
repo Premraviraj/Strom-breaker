@@ -63,7 +63,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={staggerContainer}
@@ -71,17 +71,23 @@ const Contact = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div variants={fadeInUp} className="text-center mb-16">
+          <motion.div variants={fadeInUp} className="text-center mb-12 sm:mb-16">
             {/* Header Container with Tinted Glass */}
-            <div className={`inline-block p-6 rounded-2xl backdrop-blur-md ${
+            <div className={`inline-block p-4 sm:p-6 rounded-2xl backdrop-blur-md ${
               isExtrovert 
                 ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
                 : 'bg-white/15 border border-gray-300/30 shadow-lg'
             }`}>
-              <h2 className={`text-3xl sm:text-4xl font-bold mb-4 ${theme.styles.headerClass}`} style={{ color: theme.colors.text }}>
+              <h2 className={`text-2xl sm:text-3xl lg:text-4xl mb-4 ${
+                currentTheme === 'minimalist' 
+                  ? 'font-bold tracking-tight minimalist-heading' 
+                  : 'brutalist-heading'
+              }`} style={{ color: theme.colors.text }}>
                 Get In <span style={{ color: theme.colors.textSecondary }}>Touch</span>
               </h2>
-              <p className="max-w-2xl mx-auto" style={{ color: theme.colors.textSecondary }}>
+              <p className={`max-w-2xl mx-auto ${
+                currentTheme === 'extrovert' ? 'brutalist-all' : ''
+              }`} style={{ color: theme.colors.textSecondary }}>
                 I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology and innovation.
               </p>
             </div>

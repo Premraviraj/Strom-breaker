@@ -8,9 +8,15 @@ const Timeline = () => {
   const { theme, currentTheme } = useTheme();
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    setIsClient(true);
+    // Small delay to ensure smooth animation after hydration
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const timelineData = [
@@ -204,17 +210,21 @@ const Timeline = () => {
   };
 
   return (
-    <section className="py-16" style={{ backgroundColor: theme.colors.surface }}>
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
+    <section className="py-16 sm:py-20" style={{ backgroundColor: theme.colors.surface }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 sm:mb-12">
           <h2 
-            className={`text-3xl sm:text-4xl font-bold mb-4 ${theme.styles.headerClass} transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`text-2xl sm:text-3xl lg:text-4xl mb-4 transition-all duration-1000 ${
+              currentTheme === 'minimalist' 
+                ? 'font-bold tracking-tight minimalist-heading' 
+                : 'brutalist-heading'
+            } ${isClient && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ color: theme.colors.text }}
           >
             My <span style={{ color: theme.colors.textSecondary }}>Journey</span>
           </h2>
           <p 
-            className={`max-w-2xl mx-auto transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`max-w-2xl mx-auto transition-all duration-1000 delay-200 ${isClient && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ color: theme.colors.textSecondary }}
           >
             Click on any card to explore my professional journey in detail
@@ -222,7 +232,7 @@ const Timeline = () => {
         </div>
 
         {/* Masonry-style grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-max">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 auto-rows-max">
           {timelineData.map((item, index) => {
             const Icon = item.icon;
             const isLarge = item.size === "large";
@@ -234,7 +244,7 @@ const Timeline = () => {
                   currentTheme === 'minimalist' ? 'rounded-lg' : 'rounded-none'
                 } relative overflow-hidden ${
                   isLarge ? 'md:col-span-2 lg:col-span-2 xl:col-span-2' : ''
-                } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+                } ${isClient && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
                 style={{
                   backgroundColor: currentTheme === 'minimalist' 
                     ? 'rgba(255, 255, 255, 0.1)'
@@ -246,8 +256,8 @@ const Timeline = () => {
                     ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                     : `8px 8px 0px 0px #000000`,
                   backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'none',
-                  padding: isLarge ? '2rem' : '1.5rem',
-                  minHeight: isLarge ? '400px' : '280px',
+                  padding: isLarge ? '1.5rem' : '1rem',
+                  minHeight: isLarge ? '350px' : '250px',
                   transitionDelay: `${index * 100}ms`,
                   color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
                 }}
@@ -257,6 +267,8 @@ const Timeline = () => {
                 <div className="flex justify-between items-start mb-4 relative z-10">
                   <div 
                     className={`text-sm font-bold px-3 py-2 ${
+                      currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                    } ${
                       currentTheme === 'minimalist' 
                         ? 'bg-gray-100 text-gray-800 rounded-md' 
                         : 'bg-black text-white transform -rotate-2 hover:rotate-0'
@@ -298,8 +310,12 @@ const Timeline = () => {
                 <div className="relative z-10 flex flex-col justify-between h-full">
                   <div>
                     <h3 
-                      className={`font-bold mb-3 leading-tight ${
-                        isLarge ? 'text-2xl' : 'text-2xl'
+                      className={`mb-3 leading-tight ${
+                        currentTheme === 'minimalist' 
+                          ? 'font-bold minimalist-subheading' 
+                          : 'brutalist-subheading brutalist-all'
+                      } ${
+                        isLarge ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl'
                       }`}
                       style={{ 
                         color: currentTheme === 'minimalist' ? theme.colors.text : '#000000',
@@ -312,7 +328,11 @@ const Timeline = () => {
                     </h3>
                     
                     <p 
-                      className="text-sm leading-relaxed mb-4 font-medium"
+                      className={`text-sm leading-relaxed mb-4 ${
+                        currentTheme === 'minimalist' 
+                          ? 'font-medium minimalist-body' 
+                          : 'brutalist-body brutalist-all'
+                      }`}
                       style={{ 
                         color: currentTheme === 'minimalist' ? theme.colors.textSecondary : '#000000',
                         fontWeight: currentTheme === 'minimalist' ? '400' : '500'
@@ -346,7 +366,9 @@ const Timeline = () => {
                           }}
                         />
                         <span 
-                          className="text-sm font-bold"
+                          className={`text-sm font-bold ${
+                            currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                          }`}
                           style={{ 
                             color: currentTheme === 'minimalist' ? theme.colors.text : '#FFFFFF',
                             fontWeight: '700'
@@ -375,7 +397,9 @@ const Timeline = () => {
                           }}
                         />
                         <span 
-                          className="text-sm font-bold"
+                          className={`text-sm font-bold ${
+                            currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                          }`}
                           style={{ 
                             color: currentTheme === 'minimalist' ? theme.colors.text : '#FFFFFF',
                             fontWeight: '700'
@@ -387,6 +411,8 @@ const Timeline = () => {
                     </div>
                     <div 
                       className={`text-xs font-bold px-3 py-2 ${
+                        currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                      } ${
                         currentTheme === 'minimalist' 
                           ? 'bg-gray-100 text-gray-700 rounded-md' 
                           : 'bg-black text-white transform rotate-2 hover:rotate-0'
@@ -536,14 +562,13 @@ const Timeline = () => {
                   <div className="mb-6">
                     <h2 
                       className={`mb-2 animate-slideInLeft ${
-                        currentTheme === 'minimalist' ? 'text-3xl font-light' : 'text-2xl font-black'
+                        currentTheme === 'minimalist' 
+                          ? 'text-3xl minimalist-heading' 
+                          : 'text-2xl brutalist-heading brutalist-all'
                       }`} 
                       style={{ 
                         color: currentTheme === 'minimalist' ? theme.colors.text : '#000000',
-                        animationDelay: '0.1s',
-                        fontWeight: currentTheme === 'minimalist' ? '300' : '900',
-                        textTransform: currentTheme === 'minimalist' ? 'none' : 'uppercase',
-                        letterSpacing: currentTheme === 'minimalist' ? 'normal' : '-0.02em'
+                        animationDelay: '0.1s'
                       }}
                     >
                       {timelineData[selectedCard].title}
@@ -551,11 +576,12 @@ const Timeline = () => {
                     
                     <p 
                       className={`animate-slideInLeft ${
-                        currentTheme === 'minimalist' ? 'text-lg font-normal' : 'text-xl font-bold'
+                        currentTheme === 'minimalist' 
+                          ? 'text-lg minimalist-body' 
+                          : 'text-xl brutalist-body brutalist-all'
                       }`} 
                       style={{ 
                         color: currentTheme === 'minimalist' ? theme.colors.textSecondary : '#000000', 
-                        fontWeight: currentTheme === 'minimalist' ? '400' : '700',
                         animationDelay: '0.2s'
                       }}
                     >

@@ -61,7 +61,7 @@ const Experience = () => {
     <section 
       ref={sectionRef}
       id="experience" 
-      className="py-20 relative overflow-hidden" 
+      className="py-16 sm:py-20 relative overflow-hidden" 
       style={{ backgroundColor: theme.colors.surface }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -71,9 +71,13 @@ const Experience = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Enhanced Header */}
-          <motion.div variants={fadeInUp} className="text-center mb-16">
+          <motion.div variants={fadeInUp} className="text-center mb-12 sm:mb-16">
             <motion.h2 
-              className={`text-3xl sm:text-4xl font-bold mb-4 ${theme.styles.headerClass}`} 
+              className={`text-2xl sm:text-3xl lg:text-4xl mb-4 ${
+                currentTheme === 'minimalist' 
+                  ? 'font-bold tracking-tight minimalist-heading' 
+                  : 'brutalist-heading'
+              }`} 
               style={{ color: theme.colors.text }}
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
@@ -150,7 +154,9 @@ const Experience = () => {
                               {experience.title}
                             </motion.h3>
                             <motion.p 
-                              className="text-xl font-semibold mb-2" 
+                              className={`text-xl font-semibold mb-2 ${
+                                currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                              }`} 
                               style={{ color: isExtrovert ? "#ff0080" : theme.colors.primary }}
                               whileHover={{ scale: 1.05 }}
                             >
@@ -202,7 +208,9 @@ const Experience = () => {
                         {/* Key Impacts */}
                         <div>
                           <motion.h4 
-                            className="text-lg font-semibold mb-4 flex items-center" 
+                            className={`text-lg font-semibold mb-4 flex items-center ${
+                              currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                            }`} 
                             style={{ color: theme.colors.text }}
                             whileHover={{ scale: 1.05 }}
                           >
@@ -238,7 +246,9 @@ const Experience = () => {
                                     style={{ color: isExtrovert ? "#ff0080" : theme.colors.primary }} 
                                   />
                                 </motion.div>
-                                <div className="text-xl font-bold" style={{ color: theme.colors.text }}>
+                                <div className={`text-xl font-bold ${
+                                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                                }`} style={{ color: theme.colors.text }}>
                                   {impact.metric}
                                 </div>
                                 <div className="text-xs" style={{ color: theme.colors.textSecondary }}>
@@ -253,7 +263,9 @@ const Experience = () => {
                         <div className="space-y-6">
                           <div>
                             <motion.h4 
-                              className="text-lg font-semibold mb-3 flex items-center" 
+                              className={`text-lg font-semibold mb-3 flex items-center ${
+                                currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                              }`} 
                               style={{ color: theme.colors.text }}
                               whileHover={{ scale: 1.05 }}
                             >
@@ -292,7 +304,9 @@ const Experience = () => {
 
                           <div>
                             <motion.h4 
-                              className="text-lg font-semibold mb-3 flex items-center" 
+                              className={`text-lg font-semibold mb-3 flex items-center ${
+                                currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                              }`} 
                               style={{ color: theme.colors.text }}
                               whileHover={{ scale: 1.05 }}
                             >
@@ -386,7 +400,9 @@ const Experience = () => {
                     style={{ color: isExtrovert ? "#ffff00" : theme.colors.primary }} 
                   />
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-4" style={{ color: theme.colors.text }}>
+                <h3 className={`text-xl font-semibold mb-4 ${
+                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                }`} style={{ color: theme.colors.text }}>
                   Ready for New Challenges
                 </h3>
                 <p className="mb-6 max-w-2xl mx-auto" style={{ color: theme.colors.textSecondary }}>

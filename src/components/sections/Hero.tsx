@@ -16,47 +16,59 @@ const Hero = () => {
   const ThreeDScene = isExtrovert ? RoomScene : ShockwaveScene;
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-0">
       {/* Background gradient */}
       <div className="absolute inset-0 gradient-bg" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Content */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            className="text-center lg:text-left relative z-10"
+            className="text-center lg:text-left relative z-10 order-2 lg:order-1"
           >
             {/* Content Container with Tinted Glass Effect */}
-            <div className={`p-8 rounded-2xl backdrop-blur-md ${
+            <div className={`p-4 sm:p-6 lg:p-8 rounded-2xl backdrop-blur-md ${
               isExtrovert 
                 ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
                 : 'bg-white/15 border border-gray-300/30 shadow-lg'
             }`}>
               <motion.div variants={fadeInUp} className="mb-6">
-                <span className={`text-sm font-medium px-3 py-1 rounded-full ${theme.styles.cardClass}`} style={{ color: theme.colors.textSecondary }}>
+                <span className={`text-sm font-medium px-3 py-1 rounded-full ${theme.styles.cardClass} ${
+                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                }`} style={{ color: theme.colors.textSecondary }}>
                   👋 Hello, I'm
                 </span>
               </motion.div>
 
               <motion.h1
                 variants={fadeInUp}
-                className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 ${theme.styles.headerClass}`}
+                className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 ${
+                  currentTheme === 'minimalist' 
+                    ? 'font-bold tracking-tight minimalist-heading' 
+                    : 'brutalist-heading'
+                }`}
               >
                 <span style={{ color: theme.colors.textSecondary }}>Prem R</span>
                 <br />
                 <span style={{ color: theme.colors.text }}>Full Stack Developer</span>
                 <br />
-                <span className="text-2xl sm:text-3xl lg:text-4xl" style={{ color: theme.colors.textSecondary }}>
+                <span className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl ${
+                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                }`} style={{ color: theme.colors.textSecondary }}>
                   & AI Enthusiast
                 </span>
               </motion.h1>
 
               <motion.p
                 variants={fadeInUp}
-                className="text-lg mb-8 max-w-2xl"
+                className={`text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl ${
+                  currentTheme === 'minimalist' 
+                    ? 'font-medium leading-relaxed minimalist-body' 
+                    : 'brutalist-body brutalist-all'
+                }`}
                 style={{ color: theme.colors.textSecondary }}
               >
                 Self-motivated 3rd-year engineering student with professional experience as a 
@@ -103,12 +115,12 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* 3D Scene for larger screens */}
+          {/* 3D Scene */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="hidden lg:block h-96"
+            className="h-64 sm:h-80 lg:h-96 order-1 lg:order-2"
           >
             <ThreeDScene />
           </motion.div>

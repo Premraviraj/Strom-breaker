@@ -17,14 +17,14 @@ const ThemeSwitcher = () => {
   // Smooth spring animations
   const springConfig = { stiffness: 300, damping: 30 };
   const hoverScale = useSpring(1, springConfig);
-  const sliderX = useSpring(isExtrovert ? 52 : 4, springConfig);
+  const sliderX = useSpring(isExtrovert ? 40 : 4, springConfig);
 
   useEffect(() => {
     hoverScale.set(isHovered ? 1.02 : 1);
   }, [isHovered, hoverScale]);
 
   useEffect(() => {
-    sliderX.set(isExtrovert ? 52 : 4);
+    sliderX.set(isExtrovert ? 40 : 4);
   }, [isExtrovert, sliderX]);
 
   const handleThemeToggle = () => {
@@ -35,7 +35,7 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-50" ref={containerRef}>
+    <div className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 z-50" ref={containerRef}>
       {/* Main Container */}
       <motion.div
         className="relative"
@@ -65,9 +65,9 @@ const ThemeSwitcher = () => {
           disabled={isTransitioning}
           className="relative overflow-hidden cursor-pointer focus:outline-none"
           style={{
-            width: '96px',
-            height: '52px',
-            borderRadius: '26px',
+            width: '80px',
+            height: '44px',
+            borderRadius: '22px',
             background: isExtrovert 
               ? 'linear-gradient(135deg, #ff0080 0%, #ffff00 100%)' 
               : 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)',
@@ -88,7 +88,7 @@ const ThemeSwitcher = () => {
               background: isExtrovert
                 ? 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px)'
                 : 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px)',
-              borderRadius: '26px',
+              borderRadius: '22px',
             }}
             animate={{
               opacity: isHovered ? 0.3 : 0.1,
@@ -109,9 +109,9 @@ const ThemeSwitcher = () => {
           <motion.div
             className="absolute top-1 flex items-center justify-center"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '22px',
+              width: '36px',
+              height: '36px',
+              borderRadius: '18px',
               x: sliderX,
               background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
               boxShadow: isExtrovert

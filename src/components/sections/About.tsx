@@ -87,7 +87,7 @@ const About = () => {
     <section 
       ref={sectionRef}
       id="about" 
-      className="py-20 relative overflow-hidden" 
+      className="py-16 sm:py-20 relative overflow-hidden" 
       style={{ backgroundColor: theme.colors.surface }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -97,9 +97,13 @@ const About = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Header with Typewriter Effect */}
-          <motion.div variants={fadeInUp} className="text-center mb-16">
+          <motion.div variants={fadeInUp} className="text-center mb-12 sm:mb-16">
             <motion.h2 
-              className={`text-3xl sm:text-4xl font-bold mb-6 ${theme.styles.headerClass}`} 
+              className={`text-2xl sm:text-3xl lg:text-4xl mb-4 sm:mb-6 ${
+                currentTheme === 'minimalist' 
+                  ? 'font-bold tracking-tight minimalist-heading' 
+                  : 'brutalist-heading'
+              }`} 
               style={{ color: theme.colors.text }}
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
@@ -109,7 +113,9 @@ const About = () => {
             </motion.h2>
             
             <motion.div 
-              className="text-lg sm:text-xl font-medium h-8 flex items-center justify-center"
+              className={`text-base sm:text-lg lg:text-xl font-medium h-6 sm:h-8 flex items-center justify-center ${
+                currentTheme === 'extrovert' ? 'brutalist-all' : ''
+              }`}
               style={{ color: theme.colors.textSecondary }}
             >
               {typedText + (typedText.length < fullText.length ? "|" : "")}
@@ -117,14 +123,14 @@ const About = () => {
           </motion.div>
 
           {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 mb-8 sm:mb-12">
             {/* Profile Card */}
             <motion.div 
               variants={fadeInUp}
               className="lg:col-span-3"
             >
               <Card className={`h-full ${theme.styles.cardClass} ${theme.styles.shadowClass} overflow-hidden group relative`}>
-                <CardContent className="p-6 relative z-10">
+                <CardContent className="p-4 sm:p-6 relative z-10">
                   {/* Animated border for extrovert - only on hover */}
                   {isExtrovert && (
                     <motion.div
