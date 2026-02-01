@@ -17,10 +17,10 @@ export default function Home() {
       <main className="min-h-screen">
         <Navigation />
         <Hero />
+        <Timeline />
         <About />
         <Experience />
         <Skills />
-        <Timeline />
         <Contact />
         <LeftNavigation />
         <ThemeSwitcher />

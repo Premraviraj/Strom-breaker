@@ -45,7 +45,7 @@ const Contact = () => {
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://linkedin.com/in/prem-r",
+      href: "https://www.linkedin.com/in/prem-r-8b8337247/",
       color: "hover:text-foreground",
     },
   ];
@@ -174,7 +174,7 @@ const Contact = () => {
                       </Button>
                       
                       <Button variant="outline" size="lg" className={`w-full ${theme.styles.cardClass}`} asChild>
-                        <a href="https://linkedin.com/in/prem-r" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.linkedin.com/in/prem-r-8b8337247/" target="_blank" rel="noopener noreferrer">
                           <Linkedin className="mr-2 h-4 w-4" />
                           Connect on LinkedIn
                         </a>
@@ -192,14 +192,7 @@ const Contact = () => {
             </motion.div>
           </div>
 
-          {/* Footer */}
-          <motion.div variants={itemVariants} className="mt-16 text-center">
-            <div className="pt-8" style={{ borderTop: `1px solid ${theme.colors.border}` }}>
-              <p style={{ color: theme.colors.textSecondary }}>
-                © 2026 Prem R. Built with Next.js, TypeScript, and Tailwind CSS.
-              </p>
-            </div>
-          </motion.div>
+
         </motion.div>
       </div>
     </section>

@@ -1,435 +1,329 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { Briefcase, Calendar, MapPin, ExternalLink, Building2, Users, Target, Award, TrendingUp, Globe, FileText, Code2, Zap, CheckCircle } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { motion } from "framer-motion";
+import { 
+  Briefcase, 
+  Calendar, 
+  MapPin
+} from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
-import { useRef, useState } from "react";
 
 const Experience = () => {
   const { theme, currentTheme } = useTheme();
-  const isExtrovert = currentTheme === 'extrovert';
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const experiences = [
-    {
-      title: "Technical Writer Intern",
-      company: "Nokia",
-      location: "Remote",
-      duration: "Nov 2025",
-      type: "Internship",
-      description: "Contributed to Nokia's global documentation ecosystem, creating technical content for international developer communities.",
-      keyImpacts: [
-        { icon: FileText, text: "Documented 5+ software products", metric: "5+" },
-        { icon: Globe, text: "Served 1000+ global developers", metric: "1K+" },
-        { icon: TrendingUp, text: "Improved clarity by 40%", metric: "40%" },
-        { icon: Users, text: "Collaborated across 3 countries", metric: "3" }
-      ],
-      technologies: [
-        { name: "Technical Writing", color: isExtrovert ? "#ff0080" : "#333333" },
-        { name: "API Documentation", color: isExtrovert ? "#00ff80" : "#666666" },
-        { name: "Confluence", color: isExtrovert ? "#ffff00" : "#999999" },
-        { name: "Markdown", color: isExtrovert ? "#ff0080" : "#333333" },
-        { name: "Git", color: isExtrovert ? "#00ff80" : "#666666" },
-        { name: "OpenAPI", color: isExtrovert ? "#ffff00" : "#999999" }
-      ],
-      achievements: [
-        "Outstanding Intern Recognition",
-        "30% faster documentation reviews",
-        "Global best practices adoption"
-      ],
-      companyIcon: Building2,
-      gradient: isExtrovert 
-        ? "from-pink-500/20 via-yellow-400/20 to-green-500/20"
-        : "from-gray-100 to-gray-50"
-    }
-  ];
-
-  const stats = [
-    { icon: Briefcase, label: "Experience", value: "1", suffix: "Internship", color: isExtrovert ? "#ff0080" : "#333333" },
-    { icon: Globe, label: "Global Reach", value: "1K", suffix: "Developers", color: isExtrovert ? "#00ff80" : "#666666" },
-    { icon: FileText, label: "Documentation", value: "5", suffix: "Products", color: isExtrovert ? "#ffff00" : "#999999" },
-    { icon: Award, label: "Recognition", value: "100", suffix: "% Success", color: isExtrovert ? "#ff0080" : "#333333" }
-  ];
+  const experienceCard = {
+    icon: Briefcase,
+    title: "Technical Writer",
+    company: "Nokia",
+    type: "Internship",
+    duration: "Jun 2024 - Present",
+    location: "Remote",
+    description: "Creating user-friendly documentation for complex technical products and collaborating with global engineering teams.",
+    details: [
+      "Creating comprehensive API documentation for 5+ software products",
+      "Improving documentation clarity based on user feedback and analytics",
+      "Collaborating with cross-functional teams across 3 countries",
+      "Streamlining documentation processes to reduce development time by 20%"
+    ],
+    skills: ["Technical Writing", "API Documentation", "Cross-team Collaboration", "Process Improvement"],
+    achievements: [
+      "Enhanced developer experience for 100+ engineers",
+      "Reduced documentation-related support tickets by 30%",
+      "Established new documentation standards adopted company-wide"
+    ],
+    color: "#FFD93D"
+  };
 
   return (
-    <section 
-      ref={sectionRef}
-      id="experience" 
-      className="py-16 sm:py-20 relative overflow-hidden" 
-      style={{ backgroundColor: theme.colors.surface }}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+    <section id="experience" className="py-16 sm:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-12 sm:mb-16"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
         >
-          {/* Enhanced Header */}
-          <motion.div variants={fadeInUp} className="text-center mb-12 sm:mb-16">
-            <motion.h2 
-              className={`text-2xl sm:text-3xl lg:text-4xl mb-4 ${
-                currentTheme === 'minimalist' 
-                  ? 'font-bold tracking-tight minimalist-heading' 
-                  : 'brutalist-heading'
-              }`} 
-              style={{ color: theme.colors.text }}
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.6, type: "spring" }}
-            >
-              Professional <span style={{ color: theme.colors.textSecondary }}>Experience</span>
-            </motion.h2>
-            <motion.p 
-              className="max-w-2xl mx-auto" 
+          <motion.h2 
+            className={`${
+              currentTheme === 'minimalist' 
+                ? 'text-2xl sm:text-3xl lg:text-4xl mb-4 font-bold tracking-tight minimalist-heading' 
+                : 'text-2xl sm:text-3xl lg:text-4xl mb-4 transition-all duration-1000 brutalist-heading'
+            }`}
+            style={{ color: theme.colors.text }}
+            whileHover={{ 
+              scale: 1.05,
+              textShadow: currentTheme === 'minimalist' 
+                ? "0px 0px 8px rgba(59, 130, 246, 0.3)"
+                : "3px 3px 0px rgba(0,0,0,0.2)",
+              transition: { duration: 0.3 }
+            }}
+          >
+            Professional <motion.span 
               style={{ color: theme.colors.textSecondary }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              whileHover={{ 
+                color: theme.colors.primary,
+                transition: { duration: 0.3 }
+              }}
             >
-              Real-world impact through professional internships and industry collaboration
-            </motion.p>
-          </motion.div>
-
-          {/* Experience Cards */}
-          <div className="space-y-8">
-            {experiences.map((experience, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <Card className={`${theme.styles.cardClass} ${theme.styles.shadowClass} overflow-hidden group relative`}>
-                  {/* Animated background for extrovert */}
-                  {isExtrovert && hoveredCard === index && (
-                    <motion.div
-                      className="absolute inset-0 opacity-10"
-                      style={{
-                        background: "linear-gradient(45deg, #ff0080, #00ff80, #ffff00)"
-                      }}
-                      animate={{
-                        background: [
-                          "linear-gradient(0deg, #ff0080, #00ff80, #ffff00)",
-                          "linear-gradient(120deg, #00ff80, #ffff00, #ff0080)",
-                          "linear-gradient(240deg, #ffff00, #ff0080, #00ff80)"
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    />
-                  )}
-
-                  <CardContent className="p-0 relative z-10">
-                    {/* Enhanced Header */}
-                    <div className={`bg-gradient-to-r ${experience.gradient} p-8 relative`}>
-                      <div className="flex items-start justify-between mb-6">
-                        <div className="flex items-center space-x-4">
-                          <motion.div
-                            className="p-4 rounded-2xl"
-                            style={{ backgroundColor: theme.colors.background }}
-                            whileHover={{ 
-                              scale: 1.1, 
-                              rotate: isExtrovert ? 360 : 0 
-                            }}
-                            transition={{ duration: 0.6 }}
-                          >
-                            <experience.companyIcon 
-                              className="w-8 h-8" 
-                              style={{ color: isExtrovert ? "#ff0080" : theme.colors.text }} 
-                            />
-                          </motion.div>
-                          <div>
-                            <motion.h3 
-                              className="text-2xl font-bold mb-1" 
-                              style={{ color: theme.colors.text }}
-                              whileHover={{ scale: 1.05 }}
-                            >
-                              {experience.title}
-                            </motion.h3>
-                            <motion.p 
-                              className={`text-xl font-semibold mb-2 ${
-                                currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                              }`} 
-                              style={{ color: isExtrovert ? "#ff0080" : theme.colors.primary }}
-                              whileHover={{ scale: 1.05 }}
-                            >
-                              {experience.company}
-                            </motion.p>
-                            <p className="text-sm" style={{ color: theme.colors.textSecondary }}>
-                              {experience.description}
-                            </p>
-                          </div>
-                        </div>
-                        <motion.div whileHover={{ scale: 1.1 }}>
-                          <Badge 
-                            variant="secondary" 
-                            className={`text-sm ${theme.styles.cardClass}`}
-                            style={{ backgroundColor: isExtrovert ? "#00ff80" : theme.colors.surface }}
-                          >
-                            {experience.type}
-                          </Badge>
-                        </motion.div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-6 text-sm">
-                        <motion.div 
-                          className="flex items-center"
-                          whileHover={{ scale: 1.05, x: 5 }}
-                        >
-                          <Calendar 
-                            className="h-4 w-4 mr-2" 
-                            style={{ color: isExtrovert ? "#ffff00" : theme.colors.text }} 
-                          />
-                          <span style={{ color: theme.colors.textSecondary }}>{experience.duration}</span>
-                        </motion.div>
-                        <motion.div 
-                          className="flex items-center"
-                          whileHover={{ scale: 1.05, x: 5 }}
-                        >
-                          <MapPin 
-                            className="h-4 w-4 mr-2" 
-                            style={{ color: isExtrovert ? "#00ff80" : theme.colors.text }} 
-                          />
-                          <span style={{ color: theme.colors.textSecondary }}>{experience.location}</span>
-                        </motion.div>
-                      </div>
-                    </div>
-
-                    {/* Enhanced Content */}
-                    <div className="p-8">
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Key Impacts */}
-                        <div>
-                          <motion.h4 
-                            className={`text-lg font-semibold mb-4 flex items-center ${
-                              currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                            }`} 
-                            style={{ color: theme.colors.text }}
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            <Target 
-                              className="w-5 h-5 mr-2" 
-                              style={{ color: isExtrovert ? "#ff0080" : theme.colors.text }} 
-                            />
-                            Key Impact
-                          </motion.h4>
-                          <div className="grid grid-cols-2 gap-4">
-                            {experience.keyImpacts.map((impact, idx) => (
-                              <motion.div
-                                key={idx}
-                                className={`p-4 rounded-lg ${theme.styles.cardClass} text-center group cursor-pointer`}
-                                whileHover={{ 
-                                  scale: 1.05, 
-                                  y: -3,
-                                  rotateY: isExtrovert ? 5 : 0 
-                                }}
-                                whileTap={{ scale: 0.95 }}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 + idx * 0.1 }}
-                              >
-                                <motion.div
-                                  className="mb-2 mx-auto w-10 h-10 rounded-full flex items-center justify-center"
-                                  style={{ backgroundColor: `${isExtrovert ? "#ff0080" : theme.colors.primary}20` }}
-                                  whileHover={{ rotate: isExtrovert ? 360 : 0 }}
-                                  transition={{ duration: 0.6 }}
-                                >
-                                  <impact.icon 
-                                    className="w-5 h-5" 
-                                    style={{ color: isExtrovert ? "#ff0080" : theme.colors.primary }} 
-                                  />
-                                </motion.div>
-                                <div className={`text-xl font-bold ${
-                                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                                }`} style={{ color: theme.colors.text }}>
-                                  {impact.metric}
-                                </div>
-                                <div className="text-xs" style={{ color: theme.colors.textSecondary }}>
-                                  {impact.text}
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Technologies & Achievements */}
-                        <div className="space-y-6">
-                          <div>
-                            <motion.h4 
-                              className={`text-lg font-semibold mb-3 flex items-center ${
-                                currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                              }`} 
-                              style={{ color: theme.colors.text }}
-                              whileHover={{ scale: 1.05 }}
-                            >
-                              <Code2 
-                                className="w-5 h-5 mr-2" 
-                                style={{ color: isExtrovert ? "#00ff80" : theme.colors.text }} 
-                              />
-                              Technologies
-                            </motion.h4>
-                            <div className="flex flex-wrap gap-2">
-                              {experience.technologies.map((tech, idx) => (
-                                <motion.div
-                                  key={tech.name}
-                                  initial={{ opacity: 0, scale: 0.8 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  transition={{ delay: 0.7 + idx * 0.1 }}
-                                  whileHover={{ 
-                                    scale: 1.1, 
-                                    rotate: isExtrovert ? [-5, 5, 0] : 0 
-                                  }}
-                                >
-                                  <Badge 
-                                    variant="outline" 
-                                    className={`text-xs ${theme.styles.cardClass} cursor-pointer`}
-                                    style={{ 
-                                      borderColor: tech.color,
-                                      color: tech.color 
-                                    }}
-                                  >
-                                    {tech.name}
-                                  </Badge>
-                                </motion.div>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div>
-                            <motion.h4 
-                              className={`text-lg font-semibold mb-3 flex items-center ${
-                                currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                              }`} 
-                              style={{ color: theme.colors.text }}
-                              whileHover={{ scale: 1.05 }}
-                            >
-                              <Award 
-                                className="w-5 h-5 mr-2" 
-                                style={{ color: isExtrovert ? "#ffff00" : theme.colors.text }} 
-                              />
-                              Achievements
-                            </motion.h4>
-                            <ul className="space-y-2">
-                              {experience.achievements.map((achievement, idx) => (
-                                <motion.li 
-                                  key={idx} 
-                                  className="flex items-start group"
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: 0.9 + idx * 0.1 }}
-                                  whileHover={{ x: 5, scale: 1.02 }}
-                                >
-                                  <CheckCircle 
-                                    className="w-4 h-4 mt-0.5 mr-3 flex-shrink-0" 
-                                    style={{ color: isExtrovert ? "#00ff80" : "#10B981" }} 
-                                  />
-                                  <span 
-                                    className="text-sm leading-relaxed" 
-                                    style={{ color: theme.colors.textSecondary }}
-                                  >
-                                    {achievement}
-                                  </span>
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <motion.div 
-                            className="pt-4"
-                            whileHover={{ scale: 1.02 }}
-                          >
-                            <Button 
-                              variant="outline" 
-                              className={`w-full ${theme.styles.cardClass} group`} 
-                              asChild
-                            >
-                              <a 
-                                href="https://www.nokia.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center"
-                              >
-                                <ExternalLink className="mr-2 h-4 w-4 group-hover:rotate-45 transition-transform" />
-                                Learn about Nokia
-                              </a>
-                            </Button>
-                          </motion.div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Enhanced CTA */}
-          <motion.div variants={fadeInUp} className="text-center mt-16">
-            <Card className={`${theme.styles.cardClass} ${theme.styles.shadowClass} overflow-hidden group relative`}>
-              {isExtrovert && (
-                <motion.div
-                  className="absolute inset-0 opacity-5"
-                  style={{
-                    background: "linear-gradient(45deg, #ff0080, #00ff80, #ffff00)"
-                  }}
-                  animate={{
-                    background: [
-                      "linear-gradient(0deg, #ff0080, #00ff80, #ffff00)",
-                      "linear-gradient(120deg, #00ff80, #ffff00, #ff0080)",
-                      "linear-gradient(240deg, #ffff00, #ff0080, #00ff80)"
-                    ]
-                  }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                />
-              )}
-              <CardContent className="p-8 relative z-10">
-                <motion.div
-                  className="flex items-center justify-center mb-4"
-                  whileHover={{ scale: 1.1, rotate: isExtrovert ? 360 : 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Zap 
-                    className="w-8 h-8" 
-                    style={{ color: isExtrovert ? "#ffff00" : theme.colors.primary }} 
-                  />
-                </motion.div>
-                <h3 className={`text-xl font-semibold mb-4 ${
-                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                }`} style={{ color: theme.colors.text }}>
-                  Ready for New Challenges
-                </h3>
-                <p className="mb-6 max-w-2xl mx-auto" style={{ color: theme.colors.textSecondary }}>
-                  Seeking opportunities to apply technical expertise and create meaningful impact
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className={theme.styles.buttonClass} asChild>
-                      <a href="#contact">
-                        <Briefcase className="mr-2 h-4 w-4" />
-                        Let's Connect
-                      </a>
-                    </Button>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" className={theme.styles.cardClass} asChild>
-                      <a href="/Prem_Resume.pdf" download="Prem_R_Resume.pdf">
-                        <FileText className="mr-2 h-4 w-4" />
-                        Download Resume
-                      </a>
-                    </Button>
-                  </motion.div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+              Experience
+            </motion.span>
+          </motion.h2>
+          <motion.p 
+            className="max-w-2xl mx-auto transition-all duration-1000 delay-200"
+            style={{ color: theme.colors.textSecondary }}
+            whileHover={{ 
+              scale: 1.02,
+              y: -2,
+              transition: { duration: 0.3 }
+            }}
+          >
+            My current internship experience in the telecommunications industry
+          </motion.p>
         </motion.div>
+
+        {/* Compact Experience Card - Nokia Only */}
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            className={`transform transition-all duration-300 ${
+              currentTheme === 'minimalist' ? 'rounded-lg' : 'rounded-none'
+            } relative overflow-hidden`}
+            style={{
+              backgroundColor: currentTheme === 'minimalist' 
+                ? 'rgba(255, 255, 255, 0.1)'
+                : `rgba(255, 217, 61, 0.4)`, // Translucent yellow for Nokia
+              border: currentTheme === 'minimalist' 
+                ? `1px solid ${theme.colors.border}`
+                : `4px solid #000000`,
+              boxShadow: currentTheme === 'minimalist' 
+                ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
+                : `8px 8px 0px 0px #000000`,
+              backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+              padding: '2rem',
+              color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              delay: 0.2,
+              type: "spring",
+              stiffness: 300,
+              damping: 25
+            }}
+            viewport={{ once: true }}
+            whileHover={{ 
+              scale: 1.02,
+              y: -5,
+              boxShadow: currentTheme === 'minimalist' 
+                ? `0 10px 25px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)`
+                : `12px 12px 0px 0px #000000`,
+              transition: { duration: 0.3, ease: "easeOut" }
+            }}
+          >
+            {/* Background Pattern for Extrovert Theme */}
+            {currentTheme === 'extrovert' && (
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-4 left-4 w-6 h-6 bg-black transform rotate-45" />
+                <div className="absolute top-8 right-6 w-4 h-4 bg-black rounded-full" />
+                <div className="absolute bottom-8 left-6 w-3 h-8 bg-black transform rotate-12" />
+                <div className="absolute bottom-4 right-4 w-8 h-3 bg-black transform rotate-45" />
+              </div>
+            )}
+
+            {/* Header */}
+            <div className="flex justify-between items-start mb-6 relative z-10">
+              <motion.div 
+                className={`p-4 ${
+                  currentTheme === 'minimalist' 
+                    ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                    : 'bg-black text-white transform -rotate-2'
+                } transition-transform duration-300`}
+                style={{
+                  boxShadow: currentTheme === 'minimalist' 
+                    ? 'none' 
+                    : '4px 4px 0px 0px rgba(0,0,0,0.3)'
+                }}
+                whileHover={{ 
+                  rotate: currentTheme === 'extrovert' ? 0 : 0,
+                  scale: 1.1
+                }}
+              >
+                <Briefcase 
+                  size={32} 
+                  color={currentTheme === 'minimalist' ? theme.colors.text : "#FFFFFF"}
+                  style={{ strokeWidth: 2 }}
+                />
+              </motion.div>
+
+              <motion.div
+                className={`text-sm font-bold px-4 py-2 ${
+                  currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                } ${
+                  currentTheme === 'minimalist' 
+                    ? 'bg-gray-100 text-gray-700 rounded-md' 
+                    : 'bg-black text-white transform rotate-2'
+                } transition-transform duration-300`}
+                style={{
+                  boxShadow: currentTheme === 'minimalist' 
+                    ? 'none' 
+                    : '3px 3px 0px 0px rgba(0,0,0,0.3)',
+                  fontWeight: '700'
+                }}
+                whileHover={{ rotate: 0 }}
+              >
+                {experienceCard.type}
+              </motion.div>
+            </div>
+
+            {/* Content - Compact Layout */}
+            <div className="relative z-10 space-y-6">
+              {/* Title and Company */}
+              <div className="text-center mb-6">
+                <motion.h3 
+                  className={`mb-3 leading-tight ${
+                    currentTheme === 'minimalist' 
+                      ? 'font-bold minimalist-subheading' 
+                      : 'brutalist-subheading brutalist-all'
+                  } text-2xl sm:text-3xl`}
+                  style={{ 
+                    color: currentTheme === 'minimalist' ? theme.colors.text : '#000000',
+                    fontWeight: currentTheme === 'minimalist' ? '600' : '900',
+                    textTransform: currentTheme === 'minimalist' ? 'none' : 'uppercase',
+                    letterSpacing: currentTheme === 'minimalist' ? 'normal' : '-0.02em'
+                  }}
+                  whileHover={{ x: 5 }}
+                >
+                  {experienceCard.title}
+                </motion.h3>
+
+                <motion.p 
+                  className={`text-xl font-semibold mb-3 ${
+                    currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                  }`}
+                  style={{ 
+                    color: currentTheme === 'minimalist' ? theme.colors.primary : '#000000',
+                    fontWeight: currentTheme === 'minimalist' ? '600' : '700'
+                  }}
+                  whileHover={{ x: 3 }}
+                >
+                  {experienceCard.company}
+                </motion.p>
+
+                <div className="flex flex-wrap justify-center items-center gap-4 mb-4 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <Calendar size={16} />
+                    <span>{experienceCard.duration}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <MapPin size={16} />
+                    <span>{experienceCard.location}</span>
+                  </div>
+                </div>
+                
+                <motion.p 
+                  className={`text-base leading-relaxed max-w-3xl mx-auto ${
+                    currentTheme === 'minimalist' 
+                      ? 'font-medium minimalist-body' 
+                      : 'brutalist-body brutalist-all'
+                  }`}
+                  style={{ 
+                    color: currentTheme === 'minimalist' ? theme.colors.textSecondary : '#000000',
+                    fontWeight: currentTheme === 'minimalist' ? '400' : '500'
+                  }}
+                  whileHover={{ x: 3 }}
+                >
+                  {experienceCard.description}
+                </motion.p>
+              </div>
+
+              {/* Single Column Layout for Details */}
+              <div className="space-y-6">
+                {/* Responsibilities */}
+                <div>
+                  <h4 
+                    className={`text-lg font-semibold mb-4 ${
+                      currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                    }`}
+                    style={{ 
+                      color: currentTheme === 'minimalist' ? theme.colors.text : '#000000',
+                      fontWeight: currentTheme === 'minimalist' ? '600' : '700'
+                    }}
+                  >
+                    Key Responsibilities:
+                  </h4>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {experienceCard.details.map((detail, idx) => (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className={`flex items-start space-x-3 ${
+                          currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                        }`}
+                      >
+                        <div 
+                          className={`w-2 h-2 rounded-full mt-2 flex-shrink-0`}
+                          style={{ 
+                            backgroundColor: currentTheme === 'minimalist' 
+                              ? theme.colors.primary 
+                              : '#000000'
+                          }}
+                        />
+                        <span 
+                          className="text-sm leading-relaxed"
+                          style={{ 
+                            color: currentTheme === 'minimalist' ? theme.colors.textSecondary : '#000000',
+                            fontWeight: currentTheme === 'minimalist' ? '400' : '500'
+                          }}
+                        >
+                          {detail}
+                        </span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Skills */}
+                <div>
+                  <h4 
+                    className={`text-lg font-semibold mb-4 ${
+                      currentTheme === 'extrovert' ? 'brutalist-all' : ''
+                    }`}
+                    style={{ 
+                      color: currentTheme === 'minimalist' ? theme.colors.text : '#000000',
+                      fontWeight: currentTheme === 'minimalist' ? '600' : '700'
+                    }}
+                  >
+                    Skills & Technologies:
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {experienceCard.skills.map((skill, idx) => (
+                      <motion.span
+                        key={idx}
+                        className={`px-3 py-2 text-sm ${
+                          currentTheme === 'minimalist' 
+                            ? 'bg-gray-100 text-gray-700 rounded-lg' 
+                            : 'bg-white text-black transform -rotate-1 hover:rotate-0'
+                        } transition-transform duration-300`}
+                        style={{
+                          boxShadow: currentTheme === 'minimalist' 
+                            ? 'none' 
+                            : '2px 2px 0px 0px rgba(0,0,0,0.3)',
+                          fontWeight: '600'
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

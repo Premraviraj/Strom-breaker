@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ThemeType, themes } from '@/lib/themes';
-import RocketTransition from '@/components/animations/RocketTransition';
+import ShaderTransition from '@/components/animations/ShaderTransition';
 
 interface ThemeContextType {
   currentTheme: ThemeType;
@@ -58,7 +58,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ThemeContext.Provider value={{ currentTheme, setTheme, theme, isTransitioning, showThemeSelector, setShowThemeSelector }}>
       {children}
-      <RocketTransition 
+      <ShaderTransition 
         isVisible={isTransitioning} 
         onComplete={handleTransitionComplete}
       />

@@ -7,8 +7,8 @@ import {
   User, 
   Briefcase, 
   Code, 
-  MapPin, 
-  Mail
+  Mail,
+  Clock
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -30,10 +30,10 @@ const LeftNavigation = () => {
   // All navigation items
   const allNavItems: NavigationItem[] = [
     { id: "home", label: "Welcome", icon: Home, href: "#home" },
+    { id: "timeline", label: "My Journey", icon: Clock, href: "#timeline" },
     { id: "about", label: "About Me", icon: User, href: "#about" },
     { id: "experience", label: "Work Experience", icon: Briefcase, href: "#experience" },
     { id: "skills", label: "Technical Skills", icon: Code, href: "#skills" },
-    { id: "timeline", label: "My Journey", icon: MapPin, href: "#timeline" },
     { id: "contact", label: "Get In Touch", icon: Mail, href: "#contact" },
   ];
 
@@ -189,7 +189,8 @@ const LeftNavigation = () => {
                       scale: 1.1,
                       backgroundColor: isExtrovert 
                         ? isActive ? '#ffff00' : '#f0f0f0'
-                        : isActive ? '#ffffff' : 'rgba(255,255,255,0.1)'
+                        : isActive ? '#ffffff' : 'rgba(255,255,255,0.1)',
+                      transition: { duration: 0.2 }
                     }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ scale: 0, opacity: 0 }}
@@ -229,28 +230,49 @@ const LeftNavigation = () => {
                     {/* Tooltip - Only show on desktop */}
                     {!isMobile && (
                       <motion.div
+                        key={`tooltip-${item.id}-${isActive}`} // Force re-render when active state changes
                         className={`absolute left-16 top-1/2 transform -translate-y-1/2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap pointer-events-none ${
                           isExtrovert ? 'brutalist-all' : ''
                         }`}
                         style={{
-                          background: isExtrovert 
-                            ? '#ffffff'
-                            : 'rgba(0,0,0,0.9)',
-                          color: isExtrovert ? '#000000' : '#ffffff',
+                          background: isActive 
+                            ? (isExtrovert ? '#ffff00' : '#ffffff')
+                            : (isExtrovert ? '#ffffff' : 'rgba(0,0,0,0.9)'),
+                          color: isActive 
+                            ? '#000000'
+                            : (isExtrovert ? '#000000' : '#ffffff'),
                           border: isExtrovert ? '2px solid #000000' : 'none',
                           boxShadow: isExtrovert 
                             ? '3px 3px 0px 0px #000000'
                             : '0 6px 20px rgba(0,0,0,0.4)',
+                          zIndex: 1000,
                         }}
                         initial={{ opacity: 0, x: -10, scale: 0.8 }}
-                        whileHover={{ opacity: 1, x: 0, scale: 1 }}
+                        animate={{ 
+                          opacity: 0,
+                          x: -10,
+                          scale: 0.8
+                        }}
+                        whileHover={{ 
+                          opacity: 1, 
+                          x: 0, 
+                          scale: 1,
+                          transition: { duration: 0.2 }
+                        }}
                         transition={{ duration: 0.2 }}
                       >
-                        {item.label}
+                        <span className={isActive ? 'font-bold' : 'font-medium'}>
+                          {item.label}
+                        </span>
                         {isActive && (
-                          <span className="ml-2 text-xs opacity-75">
-                            📍 Current
-                          </span>
+                          <motion.span 
+                            className="ml-2 text-xs opacity-75"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: 0.1 }}
+                          >
+                            📍 Active
+                          </motion.span>
                         )}
                         
                         {/* Tooltip Arrow */}
@@ -259,9 +281,9 @@ const LeftNavigation = () => {
                           style={{
                             borderTop: '6px solid transparent',
                             borderBottom: '6px solid transparent',
-                            borderRight: isExtrovert 
-                              ? '6px solid #000000'
-                              : '6px solid rgba(0,0,0,0.9)',
+                            borderRight: isActive 
+                              ? (isExtrovert ? '6px solid #ffff00' : '6px solid #ffffff')
+                              : (isExtrovert ? '6px solid #ffffff' : '6px solid rgba(0,0,0,0.9)'),
                           }}
                         />
                       </motion.div>

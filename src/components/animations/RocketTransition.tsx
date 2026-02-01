@@ -12,24 +12,38 @@ interface RocketTransitionProps {
 const RocketTransition = ({ isVisible, onComplete }: RocketTransitionProps) => {
   const { theme, currentTheme } = useTheme();
   const [animationPhase, setAnimationPhase] = useState<'enter' | 'morph' | 'exit'>('enter');
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (isVisible) {
       setAnimationPhase('enter');
+      setProgress(0);
       
+      // Smooth progress animation
+      const progressInterval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            return 100;
+          }
+          return prev + 1.5; // Slightly slower progress
+        });
+      }, 40); // Smoother updates
+
       const morphTimer = setTimeout(() => {
         setAnimationPhase('morph');
-      }, 1200);
+      }, 1000);
 
       const exitTimer = setTimeout(() => {
         setAnimationPhase('exit');
-      }, 3000);
+      }, 2500);
 
       const completeTimer = setTimeout(() => {
         onComplete();
-      }, 4500);
+      }, 3500); // Slightly longer duration
 
       return () => {
+        clearInterval(progressInterval);
         clearTimeout(morphTimer);
         clearTimeout(exitTimer);
         clearTimeout(completeTimer);
@@ -49,88 +63,185 @@ const RocketTransition = ({ isVisible, onComplete }: RocketTransitionProps) => {
           className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
           style={{ 
             background: (() => {
-              // Show the new theme's background immediately
-              const shouldBeColorful = !isMinimalist;
-              
-              if (animationPhase === 'morph') {
+              if (animationPhase === 'enter') {
+                return 'radial-gradient(ellipse at center, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)';
+              } else if (animationPhase === 'morph') {
                 return isMinimalist 
-                  ? 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e5e5e5 100%)'
-                  : 'linear-gradient(135deg, #ff0080 0%, #ffff00 50%, #00ff80 100%)';
+                  ? 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 30%, #cbd5e1 70%, #94a3b8 100%)'
+                  : 'linear-gradient(135deg, #ff6b9d 0%, #ffd93d 20%, #00ff80 40%, #ff6b9d 60%, #8b5cf6 80%, #ffd93d 100%)';
               } else {
-                return shouldBeColorful
-                  ? 'linear-gradient(135deg, #ff0080 0%, #ffff00 50%, #00ff80 100%)'
-                  : 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)';
+                return isMinimalist
+                  ? 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)'
+                  : 'linear-gradient(135deg, #ff0080 0%, #ffff00 25%, #00ff80 50%, #ff6b9d 75%, #8b5cf6 100%)';
               }
             })()
           }}
         >
-          {/* Morphing Typography */}
+          {/* Subtle Particle System */}
+          {animationPhase === 'morph' && (
+            <>
+              {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={`particle-${i}`}
+                  className="absolute w-1 h-1 rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    backgroundColor: isMinimalist ? '#64748b' : '#ffffff',
+                    opacity: 0.6
+                  }}
+                  animate={{
+                    y: [0, -30, 0],
+                    x: [0, Math.random() * 20 - 10, 0],
+                    opacity: [0, 0.8, 0],
+                    scale: [0, 1.2, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    delay: i * 0.1,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
+              ))}
+            </>
+          )}
+
+          {/* Central Content */}
           <div className="relative text-center">
-            {/* Current Theme Text */}
+            {/* Phase 1: Enter - Theme Announcement */}
             <motion.div
               className="absolute inset-0 flex flex-col items-center justify-center"
               animate={{
                 opacity: animationPhase === 'enter' ? 1 : 0,
-                scale: animationPhase === 'enter' ? 1 : 0.8,
-                y: animationPhase === 'enter' ? 0 : -50
+                scale: animationPhase === 'enter' ? 1 : 0.9,
+                y: animationPhase === 'enter' ? 0 : -20
               }}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <h1 
-                className={`text-6xl mb-4 ${
-                  isMinimalist ? 'font-light tracking-wider' : 'font-black uppercase'
-                }`}
-                style={{ 
-                  color: !isMinimalist ? '#ffffff' : '#000000',
-                  fontFamily: isMinimalist ? 'Inter, sans-serif' : 'Inter, sans-serif',
-                  letterSpacing: isMinimalist ? '0.1em' : '-0.02em',
-                  textShadow: isMinimalist ? 'none' : '2px 2px 4px rgba(0,0,0,0.5)'
+              <motion.div
+                className="mb-6"
+                animate={{
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{
+                  duration: 2,
+                  ease: "easeInOut"
                 }}
               >
-                {isMinimalist ? 'Minimalist' : 'Extrovert'}
+                <div 
+                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                  style={{
+                    background: isMinimalist 
+                      ? 'linear-gradient(135deg, #64748b, #94a3b8)'
+                      : 'linear-gradient(135deg, #ff0080, #ffff00)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  <motion.div
+                    className="w-8 h-8 rounded-full bg-white"
+                    animate={{
+                      scale: [1, 0.8, 1]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </div>
+              </motion.div>
+
+              <h1 
+                className="text-4xl font-light mb-3 text-white"
+                style={{ 
+                  fontFamily: 'Inter, sans-serif',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                Switching to
               </h1>
               <p 
-                className={`text-lg ${
-                  isMinimalist ? 'font-normal' : 'font-bold'
-                }`}
+                className="text-2xl font-medium text-blue-300"
                 style={{ 
-                  color: !isMinimalist ? '#ffffff' : '#666666',
                   fontFamily: 'Space Grotesk, monospace'
                 }}
               >
-                {isMinimalist ? 'Clean • Simple • Focused' : 'Bold • Vibrant • Dynamic'}
+                {isMinimalist ? 'Minimalist Mode' : 'Extrovert Mode'}
               </p>
             </motion.div>
 
-            {/* Morphing Animation with Loading Elements */}
+            {/* Phase 2: Morph - Transformation */}
             <motion.div
               className="absolute inset-0 flex flex-col items-center justify-center"
               animate={{
                 opacity: animationPhase === 'morph' ? 1 : 0,
-                scale: animationPhase === 'morph' ? 1 : 0.9
+                scale: animationPhase === 'morph' ? 1 : 0.95
               }}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              {/* Morphing Letters */}
-              <div className="flex items-center justify-center mb-8">
-                {['T', 'R', 'A', 'N', 'S', 'F', 'O', 'R', 'M'].map((letter, i) => (
-                  <motion.span
-                    key={i}
-                    className="text-5xl font-medium"
-                    style={{ 
-                      color: currentTheme === 'minimalist' ? '#000000' : '#ffffff',
-                      fontFamily: 'Space Grotesk, monospace'
+              {/* Morphing Logo */}
+              <motion.div
+                className="mb-8"
+                animate={{
+                  rotateY: [0, 180, 360],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 1.2,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+              >
+                <div 
+                  className="w-20 h-20 flex items-center justify-center relative overflow-hidden"
+                  style={{
+                    background: isMinimalist 
+                      ? 'linear-gradient(135deg, #ffffff, #f1f5f9)'
+                      : 'linear-gradient(135deg, #ff0080, #ffff00, #00ff80)',
+                    borderRadius: isMinimalist ? '12px' : '50%',
+                    border: isMinimalist ? '1px solid #e2e8f0' : '3px solid #000000',
+                    boxShadow: isMinimalist 
+                      ? '0 4px 20px rgba(0,0,0,0.1)'
+                      : '6px 6px 0px 0px #000000',
+                    transition: 'all 0.6s ease'
+                  }}
+                >
+                  <motion.div
+                    className="text-2xl font-bold"
+                    style={{
+                      color: isMinimalist ? '#64748b' : '#000000'
                     }}
                     animate={{
-                      rotateY: [0, 180, 360],
-                      scale: [1, 1.2, 1],
-                      color: currentTheme === 'minimalist' 
-                        ? ['#000000', '#666666', '#000000']
-                        : ['#ffffff', '#ff0080', '#ffffff']
+                      rotate: [0, 180, 360]
                     }}
                     transition={{
                       duration: 1.2,
-                      delay: i * 0.08,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    {isMinimalist ? '◯' : '◆'}
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* Transforming Text */}
+              <div className="flex items-center justify-center mb-6">
+                {['T', 'R', 'A', 'N', 'S', 'F', 'O', 'R', 'M'].map((letter, i) => (
+                  <motion.span
+                    key={i}
+                    className="text-3xl font-medium mx-1"
+                    style={{ 
+                      color: isMinimalist ? '#475569' : '#ffffff',
+                      fontFamily: 'Space Grotesk, monospace'
+                    }}
+                    animate={{
+                      y: [0, -10, 0],
+                      opacity: [0.7, 1, 0.7],
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      delay: i * 0.05,
                       ease: [0.25, 0.46, 0.45, 0.94]
                     }}
                   >
@@ -139,21 +250,21 @@ const RocketTransition = ({ isVisible, onComplete }: RocketTransitionProps) => {
                 ))}
               </div>
 
-              {/* Loading Dots */}
-              <div className="flex items-center justify-center space-x-3 mb-6">
+              {/* Subtle Loading Indicator */}
+              <div className="flex items-center space-x-2">
                 {[...Array(3)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="w-3 h-3 rounded-full"
+                    className="w-2 h-2 rounded-full"
                     style={{
-                      backgroundColor: currentTheme === 'minimalist' ? '#666666' : '#ffffff'
+                      backgroundColor: isMinimalist ? '#94a3b8' : 'rgba(255,255,255,0.8)'
                     }}
                     animate={{
-                      scale: [1, 1.5, 1],
+                      scale: [1, 1.3, 1],
                       opacity: [0.5, 1, 0.5]
                     }}
                     transition={{
-                      duration: 0.8,
+                      duration: 1,
                       repeat: Infinity,
                       delay: i * 0.2,
                       ease: "easeInOut"
@@ -161,235 +272,141 @@ const RocketTransition = ({ isVisible, onComplete }: RocketTransitionProps) => {
                   />
                 ))}
               </div>
+            </motion.div>
 
-              {/* Loading Text */}
+            {/* Phase 3: Exit - Completion */}
+            <motion.div
+              className="absolute inset-0 flex flex-col items-center justify-center"
+              animate={{
+                opacity: animationPhase === 'exit' ? 1 : 0,
+                scale: animationPhase === 'exit' ? 1 : 1.05,
+                y: animationPhase === 'exit' ? 0 : 20
+              }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <motion.div
+                className="mb-6"
+                animate={{
+                  scale: [0.8, 1],
+                  rotate: [0, 360]
+                }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+              >
+                <div 
+                  className="w-16 h-16 flex items-center justify-center"
+                  style={{
+                    background: isMinimalist 
+                      ? 'linear-gradient(135deg, #ffffff, #f8fafc)'
+                      : 'linear-gradient(135deg, #ff0080, #ffff00)',
+                    borderRadius: isMinimalist ? '12px' : '50%',
+                    border: isMinimalist ? '1px solid #e2e8f0' : '3px solid #000000',
+                    boxShadow: isMinimalist 
+                      ? '0 4px 20px rgba(0,0,0,0.1)'
+                      : '6px 6px 0px 0px #000000'
+                  }}
+                >
+                  <span 
+                    className="text-2xl"
+                    style={{
+                      color: isMinimalist ? '#64748b' : '#000000'
+                    }}
+                  >
+                    ✓
+                  </span>
+                </div>
+              </motion.div>
+
+              <h1 
+                className={`text-3xl mb-3 ${
+                  isMinimalist ? 'font-light' : 'font-bold'
+                }`}
+                style={{ 
+                  color: isMinimalist ? '#1e293b' : '#ffffff',
+                  fontFamily: isMinimalist ? 'Inter, sans-serif' : 'Inter, sans-serif',
+                  letterSpacing: isMinimalist ? '0.02em' : '-0.01em'
+                }}
+              >
+                {isMinimalist ? 'Minimalist Ready' : 'Extrovert Ready'}
+              </h1>
+              <p 
+                className="text-lg opacity-80"
+                style={{ 
+                  color: isMinimalist ? '#64748b' : 'rgba(255,255,255,0.9)',
+                  fontFamily: 'Space Grotesk, monospace'
+                }}
+              >
+                {isMinimalist ? 'Clean • Focused • Elegant' : 'Bold • Vibrant • Dynamic'}
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Refined Progress Bar */}
+          <motion.div
+            className="absolute bottom-16 left-1/2 transform -translate-x-1/2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="text-center mb-4">
               <motion.p
-                className="text-lg font-medium mb-8"
+                className="text-sm font-medium"
                 style={{
-                  color: currentTheme === 'minimalist' ? '#666666' : '#ffffff',
+                  color: animationPhase === 'enter' 
+                    ? 'rgba(255,255,255,0.8)'
+                    : isMinimalist ? '#64748b' : 'rgba(255,255,255,0.9)',
                   fontFamily: 'Space Grotesk, monospace'
                 }}
                 animate={{
                   opacity: [0.7, 1, 0.7]
                 }}
                 transition={{
-                  duration: 1.5,
+                  duration: 2,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
               >
-                Loading {currentTheme === 'minimalist' ? 'Minimalist' : 'Extrovert'} Components...
+                Loading {isMinimalist ? 'Minimalist' : 'Extrovert'} Interface...
               </motion.p>
-
-              {/* Morphing Geometric Elements */}
-              <div className="flex space-x-4">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-3 h-3"
-                    style={{
-                      backgroundColor: currentTheme === 'minimalist' ? '#cccccc' : '#ff0080',
-                      borderRadius: currentTheme === 'minimalist' ? '50%' : '0%'
-                    }}
-                    animate={{
-                      rotate: [0, 180, 360],
-                      borderRadius: currentTheme === 'minimalist' 
-                        ? ['0%', '25%', '50%']
-                        : ['50%', '25%', '0%'],
-                      backgroundColor: currentTheme === 'minimalist'
-                        ? ['#ff0080', '#ffff00', '#cccccc']
-                        : ['#cccccc', '#666666', '#ff0080']
-                    }}
-                    transition={{
-                      duration: 1.2,
-                      delay: i * 0.15,
-                      ease: [0.25, 0.46, 0.45, 0.94]
-                    }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Target Theme Text */}
-            <motion.div
-              className="absolute inset-0 flex flex-col items-center justify-center"
-              animate={{
-                opacity: animationPhase === 'exit' ? 1 : 0,
-                scale: animationPhase === 'exit' ? 1 : 1.1,
-                y: animationPhase === 'exit' ? 0 : 50
-              }}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <h1 
-                className={`text-6xl mb-4 ${
-                  currentTheme === 'minimalist' ? 'font-light tracking-wider' : 'font-black uppercase'
-                }`}
-                style={{ 
-                  color: currentTheme === 'minimalist' ? '#000000' : '#ffffff',
-                  fontFamily: currentTheme === 'minimalist' ? 'Inter, sans-serif' : 'Inter, sans-serif',
-                  letterSpacing: currentTheme === 'minimalist' ? '0.1em' : '-0.02em',
-                  textShadow: currentTheme === 'minimalist' ? 'none' : '2px 2px 4px rgba(0,0,0,0.5)'
-                }}
-              >
-                {currentTheme === 'minimalist' ? 'Minimalist' : 'Extrovert'}
-              </h1>
-              <p 
-                className={`text-lg ${
-                  currentTheme === 'minimalist' ? 'font-normal' : 'font-bold'
-                }`}
-                style={{ 
-                  color: currentTheme === 'minimalist' ? '#666666' : '#ffffff',
-                  fontFamily: 'Space Grotesk, monospace'
-                }}
-              >
-                {currentTheme === 'minimalist' ? 'Clean • Simple • Focused' : 'Bold • Vibrant • Dynamic'}
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Minimal Floating Elements */}
-          {animationPhase === 'morph' && (
-            <>
-              {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={`float-${i}`}
-                  className="absolute w-1 h-1 rounded-full"
-                  style={{
-                    left: `${20 + Math.random() * 60}%`,
-                    top: `${20 + Math.random() * 60}%`,
-                    backgroundColor: currentTheme === 'minimalist' ? '#cccccc' : '#ffffff'
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: i * 0.1,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                />
-              ))}
-            </>
-          )}
-
-          {/* Subtle Grid Lines for Minimalist */}
-          {currentTheme === 'minimalist' && animationPhase === 'exit' && (
-            <div className="absolute inset-0 opacity-10">
-              {[...Array(10)].map((_, i) => (
-                <motion.div
-                  key={`grid-v-${i}`}
-                  className="absolute top-0 bottom-0 w-px bg-gray-300"
-                  style={{ left: `${i * 10}%` }}
-                  initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{ duration: 0.6, delay: i * 0.05 }}
-                />
-              ))}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={`grid-h-${i}`}
-                  className="absolute left-0 right-0 h-px bg-gray-300"
-                  style={{ top: `${i * 16.66}%` }}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.6, delay: i * 0.05 }}
-                />
-              ))}
             </div>
-          )}
 
-          {/* Bold Geometric Shapes for Extrovert */}
-          {currentTheme === 'extrovert' && animationPhase === 'exit' && (
-            <>
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={`shape-${i}`}
-                  className="absolute"
-                  style={{
-                    left: `${Math.random() * 80 + 10}%`,
-                    top: `${Math.random() * 80 + 10}%`,
-                    width: `${Math.random() * 40 + 20}px`,
-                    height: `${Math.random() * 40 + 20}px`,
-                    backgroundColor: ['#ff0080', '#ffff00', '#00ff80'][i % 3],
-                    transform: `rotate(${Math.random() * 45}deg)`
-                  }}
-                  initial={{ scale: 0, rotate: 0 }}
-                  animate={{ 
-                    scale: 1, 
-                    rotate: Math.random() * 360,
-                    opacity: [0, 0.8, 0]
-                  }}
-                  transition={{ 
-                    duration: 1, 
-                    delay: i * 0.1,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                />
-              ))}
-            </>
-          )}
-
-          {/* Enhanced Progress Indicator */}
-          <motion.div
-            className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            {/* Progress Label */}
-            <motion.p
-              className="text-sm font-medium mb-4"
-              style={{
-                color: currentTheme === 'minimalist' ? '#666666' : '#ffffff',
-                fontFamily: 'Space Grotesk, monospace'
-              }}
-              animate={{
-                opacity: [0.6, 1, 0.6]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              Initializing {currentTheme === 'minimalist' ? 'Clean' : 'Bold'} Interface...
-            </motion.p>
-
-            {/* Progress Bar Container */}
+            {/* Elegant Progress Bar */}
             <div 
-              className="w-64 h-2 mx-auto rounded-full overflow-hidden shadow-inner"
+              className="w-80 h-1 mx-auto rounded-full overflow-hidden"
               style={{ 
-                backgroundColor: currentTheme === 'minimalist' 
-                  ? 'rgba(0,0,0,0.1)' 
-                  : 'rgba(255,255,255,0.2)',
-                boxShadow: currentTheme === 'minimalist'
-                  ? 'inset 0 2px 4px rgba(0,0,0,0.1)'
-                  : 'inset 0 2px 4px rgba(0,0,0,0.3)'
+                backgroundColor: animationPhase === 'enter'
+                  ? 'rgba(255,255,255,0.2)'
+                  : isMinimalist 
+                    ? 'rgba(100,116,139,0.2)' 
+                    : 'rgba(255,255,255,0.3)'
               }}
             >
               <motion.div
-                className="h-full rounded-full relative overflow-hidden"
+                className="h-full rounded-full relative"
                 style={{
-                  background: currentTheme === 'minimalist'
-                    ? 'linear-gradient(90deg, #000000, #666666)'
-                    : 'linear-gradient(90deg, #ff0080, #ffff00, #00ff80)'
+                  background: animationPhase === 'enter'
+                    ? 'linear-gradient(90deg, #60a5fa, #a78bfa)'
+                    : isMinimalist
+                      ? 'linear-gradient(90deg, #64748b, #94a3b8)'
+                      : 'linear-gradient(90deg, #ff0080, #ffff00, #00ff80)'
                 }}
-                animate={{ width: ['0%', '100%'] }}
-                transition={{ duration: 4.5, ease: "easeInOut" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
               >
-                {/* Animated shine effect */}
+                {/* Subtle glow effect */}
                 <motion.div
-                  className="absolute inset-0 opacity-50"
+                  className="absolute inset-0 rounded-full"
                   style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)'
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                    filter: 'blur(2px)'
                   }}
                   animate={{
                     x: ['-100%', '200%']
                   }}
                   transition={{
-                    duration: 2,
+                    duration: 1.5,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
@@ -397,23 +414,74 @@ const RocketTransition = ({ isVisible, onComplete }: RocketTransitionProps) => {
               </motion.div>
             </div>
 
-            {/* Percentage Counter */}
+            {/* Progress Percentage */}
             <motion.div
-              className="mt-3 text-xs font-mono"
+              className="mt-3 text-center text-xs font-mono"
               style={{
-                color: currentTheme === 'minimalist' ? '#999999' : 'rgba(255,255,255,0.8)'
+                color: animationPhase === 'enter'
+                  ? 'rgba(255,255,255,0.6)'
+                  : isMinimalist ? '#94a3b8' : 'rgba(255,255,255,0.7)'
               }}
             >
-              <motion.span
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                {animationPhase === 'enter' && '25%'}
-                {animationPhase === 'morph' && '75%'}
-                {animationPhase === 'exit' && '100%'}
-              </motion.span>
+              {Math.round(progress)}%
             </motion.div>
           </motion.div>
+
+          {/* Theme-specific ambient elements */}
+          {animationPhase === 'exit' && (
+            <>
+              {isMinimalist ? (
+                // Minimalist: Subtle grid lines
+                <div className="absolute inset-0 opacity-5">
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={`grid-${i}`}
+                      className="absolute bg-slate-400"
+                      style={{
+                        left: `${i * 12.5}%`,
+                        top: 0,
+                        bottom: 0,
+                        width: '1px'
+                      }}
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.6, delay: i * 0.05 }}
+                    />
+                  ))}
+                </div>
+              ) : (
+                // Extrovert: Floating geometric shapes
+                <>
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={`shape-${i}`}
+                      className="absolute"
+                      style={{
+                        left: `${Math.random() * 80 + 10}%`,
+                        top: `${Math.random() * 80 + 10}%`,
+                        width: `${Math.random() * 20 + 10}px`,
+                        height: `${Math.random() * 20 + 10}px`,
+                        backgroundColor: ['#ff0080', '#ffff00', '#00ff80'][i % 3],
+                        borderRadius: i % 2 === 0 ? '50%' : '0%',
+                        opacity: 0.7
+                      }}
+                      initial={{ scale: 0, rotate: 0 }}
+                      animate={{ 
+                        scale: [0, 1, 0], 
+                        rotate: Math.random() * 360,
+                        y: [0, -20, 0]
+                      }}
+                      transition={{ 
+                        duration: 1.5, 
+                        delay: i * 0.1,
+                        ease: [0.25, 0.46, 0.45, 0.94]
+                      }}
+                    />
+                  ))}
+                </>
+              )}
+            </>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
