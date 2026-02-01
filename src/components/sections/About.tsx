@@ -68,7 +68,7 @@ const About = () => {
     },
     { 
       icon: GraduationCap, 
-      text: "CSE & AI • CGPA 7.9",
+      text: "CSE & AI • CGPA 7.3",
       color: isExtrovert ? "#00ff80" : "#000000"
     },
     { 

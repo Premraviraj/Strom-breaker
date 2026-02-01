@@ -39,7 +39,7 @@ const Hero = () => {
                 <span className={`text-sm font-medium px-3 py-1 rounded-full ${theme.styles.cardClass} ${
                   currentTheme === 'extrovert' ? 'brutalist-all' : ''
                 }`} style={{ color: theme.colors.textSecondary }}>
-                  👋 Hello, I'm
+                   Hello, I'm
                 </span>
               </motion.div>
 
@@ -53,7 +53,7 @@ const Hero = () => {
               >
                 <span style={{ color: theme.colors.textSecondary }}>Prem R</span>
                 <br />
-                <span style={{ color: theme.colors.text }}>Full Stack Developer</span>
+                <span style={{ color: theme.colors.text }}>Full Stack    Web Developer</span>
                 <br />
                 <span className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl ${
                   currentTheme === 'extrovert' ? 'brutalist-all' : ''
@@ -71,7 +71,7 @@ const Hero = () => {
                 }`}
                 style={{ color: theme.colors.textSecondary }}
               >
-                Self-motivated 3rd-year engineering student with professional experience as a 
+                Self-motivated 4th-year engineering student with professional experience as a 
                 Technical Writer Intern at Nokia. Strong foundation in software development, 
                 AI/ML, and full-stack web technologies. Always curious, always learning — 
                 I thrive in collaborative teams where creativity meets code.

@@ -7,7 +7,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { ThemeType } from "../../lib/themes";
 
 const ThemeSwitcher = () => {
-  const { currentTheme, setTheme, theme, isTransitioning } = useTheme();
+  const { currentTheme, setTheme, theme, isTransitioning, showThemeSelector } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,9 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="fixed bottom-32 sm:bottom-36 right-4 sm:right-8 z-50" ref={containerRef}>
+    <>
+      {!showThemeSelector && (
+        <div className="fixed bottom-32 sm:bottom-36 right-4 sm:right-8 z-50" ref={containerRef}>
       {/* Main Container */}
       <motion.div
         className="relative"
@@ -344,7 +346,9 @@ const ThemeSwitcher = () => {
           }}
         />
       </motion.div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

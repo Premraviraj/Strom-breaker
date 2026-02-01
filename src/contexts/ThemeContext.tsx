@@ -30,21 +30,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Check if user has visited before and selected a theme
   useEffect(() => {
-    const hasSelectedTheme = localStorage.getItem('portfolio-theme-selected');
-    const savedTheme = localStorage.getItem('portfolio-theme') as ThemeType;
-    
-    if (!hasSelectedTheme) {
-      // First time visitor - show theme selector
-      setShowThemeSelector(true);
-    } else if (savedTheme && themes[savedTheme]) {
-      // Returning visitor - use saved theme
-      setCurrentTheme(savedTheme);
-    }
+    // Always show theme selector on every visit
+    setShowThemeSelector(true);
   }, []);
 
   const setTheme = (theme: ThemeType) => {
-    if (theme === currentTheme) return;
-    
     // Hide theme selector if it's showing
     if (showThemeSelector) {
       setShowThemeSelector(false);
@@ -62,19 +52,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const handleTransitionComplete = () => {
     setIsTransitioning(false);
   };
-
-  useEffect(() => {
-    const hasSelectedTheme = localStorage.getItem('portfolio-theme-selected');
-    const savedTheme = localStorage.getItem('portfolio-theme') as ThemeType;
-    
-    if (!hasSelectedTheme) {
-      // First time visitor - show theme selector
-      setShowThemeSelector(true);
-    } else if (savedTheme && themes[savedTheme]) {
-      // Returning visitor - use saved theme
-      setCurrentTheme(savedTheme);
-    }
-  }, []);
 
   const theme = themes[currentTheme];
 

@@ -33,16 +33,12 @@ const Navigation = () => {
         scrolled
           ? isExtrovert
             ? 'bg-white/95 border-b-4 border-black shadow-[0_4px_0px_0px_#000000] backdrop-blur-md'
-            : `${theme.styles.cardClass} backdrop-blur-md`
+            : 'bg-black/80 backdrop-blur-md border-b border-white/20'
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`flex justify-between items-center h-16 ${
-          !scrolled && currentTheme === 'minimalist' 
-            ? 'bg-white/15 backdrop-blur-md rounded-lg mt-4 px-6 border border-gray-300/30 shadow-lg' 
-            : ''
-        }`}>
+        <div className="flex justify-between items-center h-16">
           {/* Logo/Name - Aligned with Hero content */}
           <motion.div
             whileHover={{ scale: 1.05 }}

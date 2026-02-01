@@ -21,7 +21,7 @@ const Experience = () => {
       title: "Technical Writer Intern",
       company: "Nokia",
       location: "Remote",
-      duration: "June 2024 - August 2024",
+      duration: "Nov 2025",
       type: "Internship",
       description: "Contributed to Nokia's global documentation ecosystem, creating technical content for international developer communities.",
       keyImpacts: [

@@ -8,7 +8,8 @@ import Skills from "@/components/sections/Skills";
 import Timeline from "@/components/sections/Timeline";
 import Contact from "@/components/sections/Contact";
 import ThemeWrapper from "@/components/ui/ThemeWrapper";
-import LeftNavigation from "@/components/ui/LeftNavigation";
+import LeftNavigation from "../components/ui/LeftNavigation";
+import ThemeSwitcher from "../components/ui/ThemeSwitcher";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <Timeline />
         <Contact />
         <LeftNavigation />
+        <ThemeSwitcher />
       </main>
     </ThemeWrapper>
   );

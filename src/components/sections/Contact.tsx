@@ -48,18 +48,6 @@ const Contact = () => {
       href: "https://linkedin.com/in/prem-r",
       color: "hover:text-foreground",
     },
-    {
-      icon: ExternalLink,
-      label: "Credly",
-      href: "https://www.credly.com/users/prem-r.96cb47ba/",
-      color: "hover:text-foreground",
-    },
-    {
-      icon: ExternalLink,
-      label: "Google Skills",
-      href: "https://www.cloudskillsboost.google/public_profiles/e94b85fd-424e-4c69-b51f-0d6189b131d0",
-      color: "hover:text-foreground",
-    },
   ];
 
   return (
@@ -208,7 +196,7 @@ const Contact = () => {
           <motion.div variants={itemVariants} className="mt-16 text-center">
             <div className="pt-8" style={{ borderTop: `1px solid ${theme.colors.border}` }}>
               <p style={{ color: theme.colors.textSecondary }}>
-                © 2024 Prem R. Built with Next.js, TypeScript, and Tailwind CSS.
+                © 2026 Prem R. Built with Next.js, TypeScript, and Tailwind CSS.
               </p>
             </div>
           </motion.div>

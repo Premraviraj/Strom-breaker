@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar, Award, BookOpen, Code, Briefcase, Trophy, Target, Clock, X, Star, CheckCircle } from "lucide-react";
+import { Calendar, Award, BookOpen, Code, Briefcase, Trophy, Target, Clock, X, CheckCircle, Github, ExternalLink } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
 const Timeline = () => {
@@ -10,12 +10,12 @@ const Timeline = () => {
 
   const timelineData = [
     {
-      date: "Aug 2022",
+      date: "Dec 2022",
       type: "education",
       title: "B.Tech CSE & AI",
       organization: "Sri Venkateshwara College",
       description: "Building foundation in Computer Science and Artificial Intelligence with focus on emerging technologies.",
-      highlights: ["Current CGPA: 7.9", "Focus on AI/ML and Software Development", "Expected graduation: 2026"],
+      highlights: ["Current CGPA: 7.3", "Focus on AI/ML and Software Development", "Expected graduation: 2026"],
       skills: ["Computer Science", "Artificial Intelligence", "Mathematics", "Programming"],
       impact: "Building foundation for tech career",
       duration: "4 years (ongoing)",
@@ -55,7 +55,8 @@ const Timeline = () => {
       completion: 1.0,
       color: currentTheme === 'extrovert' ? "#FF6B9D" : theme.colors.primary,
       icon: Code,
-      size: "large"
+      size: "large",
+      link: "https://github.com/Premraviraj/ex_track"
     },
     {
       date: "Nov 2023",
@@ -122,6 +123,23 @@ const Timeline = () => {
       size: "normal"
     },
     {
+      date: "Dec 2024",
+      type: "project",
+      title: "EcoTravel",
+      organization: "Sustainable Tourism Platform",
+      description: "Full-stack web application that incentivizes eco-friendly travel choices using blockchain technology and carbon footprint tracking.",
+      highlights: ["Custom cryptocurrency (EcoTokens) reward system", "Real-time CO2 savings calculator with data visualization", "Interactive maps with route planning", "3D avatar system and gamification elements", "Secure blockchain integration with Web3"],
+      skills: ["React.js", "Node.js", "MongoDB", "Web3", "Blockchain", "Leaflet Maps", "Chart.js", "Framer Motion", "Express.js"],
+      impact: "Promoting sustainable tourism through technology and incentivization",
+      duration: "4 months",
+      rating: 4.8,
+      completion: 1.0,
+      color: currentTheme === 'extrovert' ? "#00FF80" : theme.colors.primary,
+      icon: Code,
+      size: "large",
+      link: "https://github.com/Premraviraj/Mjolnior.git"
+    },
+    {
       date: "Jun 2024 - Present",
       type: "experience",
       title: "Technical Writer",
@@ -133,7 +151,7 @@ const Timeline = () => {
       duration: "Ongoing",
       rating: 4.7,
       completion: 0.8,
-      color: currentTheme === 'extrovert' ? "#00FF80" : theme.colors.secondary,
+      color: currentTheme === 'extrovert' ? "#FFD93D" : theme.colors.secondary,
       icon: Briefcase,
       size: "large"
     }
@@ -334,38 +352,6 @@ const Timeline = () => {
                   {/* Stats */}
                   <div className="flex items-center justify-between mt-auto">
                     <div className="flex items-center space-x-4">
-                      <div 
-                        className={`flex items-center space-x-1 px-3 py-2 ${
-                          currentTheme === 'minimalist' 
-                            ? 'bg-gray-100 text-gray-700 rounded-md' 
-                            : 'bg-black text-white transform rotate-1 hover:rotate-0'
-                        } transition-transform duration-300`}
-                        style={{
-                          boxShadow: currentTheme === 'minimalist' 
-                            ? 'none' 
-                            : '3px 3px 0px 0px rgba(0,0,0,0.3)'
-                        }}
-                      >
-                        <Star 
-                          size={16} 
-                          fill={currentTheme === 'minimalist' ? theme.colors.text : "#FFFFFF"} 
-                          color={currentTheme === 'minimalist' ? theme.colors.text : "#FFFFFF"}
-                          style={{
-                            strokeWidth: 2
-                          }}
-                        />
-                        <span 
-                          className={`text-sm font-bold ${
-                            currentTheme === 'extrovert' ? 'brutalist-all' : ''
-                          }`}
-                          style={{ 
-                            color: currentTheme === 'minimalist' ? theme.colors.text : '#FFFFFF',
-                            fontWeight: '700'
-                          }}
-                        >
-                          {item.rating}
-                        </span>
-                      </div>
                       <div 
                         className={`flex items-center space-x-1 px-3 py-2 ${
                           currentTheme === 'minimalist' 
@@ -576,6 +562,29 @@ const Timeline = () => {
                     >
                       {timelineData[selectedCard].organization}
                     </p>
+
+                    {/* GitHub Link Button - Only show for projects with links */}
+                    {timelineData[selectedCard].link && (
+                      <div className="mt-4 animate-slideInLeft" style={{ animationDelay: '0.25s' }}>
+                        <a
+                          href={timelineData[selectedCard].link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center space-x-2 px-4 py-2 transition-all duration-300 hover:scale-105 ${
+                            currentTheme === 'minimalist'
+                              ? 'bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 border border-gray-300'
+                              : 'bg-black text-white border-2 border-black transform -rotate-1 hover:rotate-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]'
+                          }`}
+                          style={{
+                            fontWeight: currentTheme === 'minimalist' ? '500' : '700'
+                          }}
+                        >
+                          <Github size={16} />
+                          <span>View Code</span>
+                          <ExternalLink size={14} />
+                        </a>
+                      </div>
+                    )}
                     
                     {/* Date and stats - minimal layout for minimalist */}
                     <div className={`flex items-center mt-4 animate-slideInLeft ${
@@ -598,31 +607,12 @@ const Timeline = () => {
                       {currentTheme === 'minimalist' ? (
                         <>
                           <div className="flex items-center space-x-1 text-sm text-gray-500">
-                            <Star size={14} fill={theme.colors.textSecondary} color={theme.colors.textSecondary} />
-                            <span>{timelineData[selectedCard].rating}</span>
-                          </div>
-                          <div className="flex items-center space-x-1 text-sm text-gray-500">
                             <CheckCircle size={14} color={theme.colors.textSecondary} />
                             <span>{Math.round(timelineData[selectedCard].completion * 100)}%</span>
                           </div>
                         </>
                       ) : (
                         <div className="flex items-center space-x-2 text-sm">
-                          <div className={`flex items-center space-x-1 px-3 py-2 bg-gray-100 text-gray-800 rounded-md transition-transform duration-300`} 
-                          style={{ boxShadow: 'none' }}>
-                            <Star 
-                              size={16} 
-                              fill={theme.colors.text} 
-                              color={theme.colors.text}
-                              style={{ strokeWidth: 2 }}
-                            />
-                            <span style={{ 
-                              color: theme.colors.text, 
-                              fontWeight: '700' 
-                            }}>
-                              {timelineData[selectedCard].rating}
-                            </span>
-                          </div>
                           <div className={`flex items-center space-x-1 px-3 py-2 bg-gray-100 text-gray-800 rounded-md transition-transform duration-300`} 
                           style={{ boxShadow: 'none' }}>
                             <CheckCircle 
@@ -711,16 +701,18 @@ const Timeline = () => {
                             className={`hover:scale-105 transition-transform duration-300 animate-slideInLeft ${
                               currentTheme === 'minimalist' 
                                 ? 'px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full' 
-                                : 'px-3 py-1 rounded-full backdrop-blur-sm border'
+                                : 'px-3 py-1 rounded-full backdrop-blur-sm border font-bold'
                             }`}
                             style={currentTheme === 'minimalist' ? {
                               animationDelay: `${0.9 + idx * 0.05}s`
                             } : { 
-                              backgroundColor: `${timelineData[selectedCard].color}30`,
-                              color: timelineData[selectedCard].color,
-                              border: `1px solid ${timelineData[selectedCard].color}50`,
+                              backgroundColor: idx % 4 === 0 ? '#FF0080' : idx % 4 === 1 ? '#00FF80' : idx % 4 === 2 ? '#FFD93D' : '#FF6B9D',
+                              color: '#FFFFFF',
+                              border: `2px solid #000000`,
                               animationDelay: `${0.9 + idx * 0.05}s`,
-                              textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                              textShadow: '0 2px 4px rgba(0, 0, 0, 0.8)',
+                              boxShadow: '3px 3px 0px 0px #000000',
+                              transform: idx % 2 === 0 ? 'rotate(-2deg)' : 'rotate(2deg)'
                             }}
                           >
                             {skill}
