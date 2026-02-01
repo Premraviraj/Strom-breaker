@@ -2,15 +2,21 @@
 
 import { useTheme } from "../../contexts/ThemeContext";
 import { useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import ShaderBackground from "../3d/ShaderBackground";
 import NeoBrutalistScene from "../3d/NeoBrutalistScene";
+import ThemeSelector from "./ThemeSelector";
 
 interface ThemeWrapperProps {
   children: React.ReactNode;
 }
 
 const ThemeWrapper: React.FC<ThemeWrapperProps> = ({ children }) => {
-  const { theme, currentTheme, isTransitioning } = useTheme();
+  const { theme, currentTheme, isTransitioning, showThemeSelector, setTheme } = useTheme();
+
+  const handleThemeSelect = (selectedTheme: 'minimalist' | 'extrovert') => {
+    setTheme(selectedTheme);
+  };
 
   useEffect(() => {
     // Apply theme styles to document body
@@ -30,6 +36,13 @@ const ThemeWrapper: React.FC<ThemeWrapperProps> = ({ children }) => {
 
   return (
     <div className={`min-h-screen transition-all duration-500 ${theme.styles.backgroundClass} relative`}>
+      {/* Theme Selector Overlay */}
+      <AnimatePresence>
+        {showThemeSelector && (
+          <ThemeSelector onThemeSelect={handleThemeSelect} />
+        )}
+      </AnimatePresence>
+
       {/* Shader background only for minimalist theme */}
       {currentTheme === 'minimalist' && (
         <ShaderBackground />

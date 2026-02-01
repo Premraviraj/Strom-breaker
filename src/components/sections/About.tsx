@@ -170,7 +170,7 @@ const About = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
                     >
-                      I'm a <strong style={{ color: theme.colors.text }}>3rd-year CSE & AI student</strong> with 
+                      I'm a <strong style={{ color: theme.colors.text }}>4th-year CSE & AI student</strong> with 
                       experience as a <strong style={{ color: theme.colors.text }}>Technical Writer at Nokia</strong>. 
                       I turn complex problems into elegant solutions through code and collaboration.
                     </motion.p>

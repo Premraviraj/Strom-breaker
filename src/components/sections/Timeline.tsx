@@ -7,17 +7,6 @@ import { useTheme } from "../../contexts/ThemeContext";
 const Timeline = () => {
   const { theme, currentTheme } = useTheme();
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    // Small delay to ensure smooth animation after hydration
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   const timelineData = [
     {
@@ -210,7 +199,7 @@ const Timeline = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20" style={{ backgroundColor: theme.colors.surface }}>
+    <section id="timeline" className="py-16 sm:py-20" style={{ backgroundColor: theme.colors.surface }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
           <h2 
@@ -218,13 +207,13 @@ const Timeline = () => {
               currentTheme === 'minimalist' 
                 ? 'font-bold tracking-tight minimalist-heading' 
                 : 'brutalist-heading'
-            } ${isClient && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            } opacity-100 translate-y-0`}
             style={{ color: theme.colors.text }}
           >
             My <span style={{ color: theme.colors.textSecondary }}>Journey</span>
           </h2>
           <p 
-            className={`max-w-2xl mx-auto transition-all duration-1000 delay-200 ${isClient && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className="max-w-2xl mx-auto transition-all duration-1000 delay-200 opacity-100 translate-y-0"
             style={{ color: theme.colors.textSecondary }}
           >
             Click on any card to explore my professional journey in detail
@@ -244,7 +233,7 @@ const Timeline = () => {
                   currentTheme === 'minimalist' ? 'rounded-lg' : 'rounded-none'
                 } relative overflow-hidden ${
                   isLarge ? 'md:col-span-2 lg:col-span-2 xl:col-span-2' : ''
-                } ${isClient && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+                } opacity-100 translate-y-0`}
                 style={{
                   backgroundColor: currentTheme === 'minimalist' 
                     ? 'rgba(255, 255, 255, 0.1)'
@@ -831,56 +820,6 @@ const Timeline = () => {
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-          from { 
-            opacity: 0; 
-            transform: translateY(50px) scale(0.9); 
-          }
-          to { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); 
-          }
-        }
-        
-        @keyframes slideInLeft {
-          from { 
-            opacity: 0; 
-            transform: translateX(-30px); 
-          }
-          to { 
-            opacity: 1; 
-            transform: translateX(0); 
-          }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-        
-        .animate-slideUp {
-          animation: slideUp 0.4s ease-out;
-        }
-        
-        .animate-slideInLeft {
-          animation: slideInLeft 0.6s ease-out both;
-        }
-        
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 };

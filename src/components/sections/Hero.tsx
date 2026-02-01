@@ -88,30 +88,6 @@ const Hero = () => {
                   </a>
                 </Button>
               </motion.div>
-
-              <motion.div
-                variants={fadeInUp}
-                className="mt-12 flex justify-center lg:justify-start"
-              >
-                <div className="flex items-center space-x-8 text-sm" style={{ color: theme.colors.textSecondary }}>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: theme.colors.text }}>1</div>
-                    <div>Internship</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: theme.colors.text }}>3+</div>
-                    <div>Years Learning</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: theme.colors.text }}>10+</div>
-                    <div>Projects</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: theme.colors.text }}>5+</div>
-                    <div>Technologies</div>
-                  </div>
-                </div>
-              </motion.div>
             </div>
           </motion.div>
 

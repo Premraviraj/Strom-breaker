@@ -35,7 +35,7 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 z-50" ref={containerRef}>
+    <div className="fixed bottom-32 sm:bottom-36 right-4 sm:right-8 z-50" ref={containerRef}>
       {/* Main Container */}
       <motion.div
         className="relative"
