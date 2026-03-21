@@ -91,7 +91,7 @@ const Experience = () => {
             } relative overflow-hidden`}
             style={{
               backgroundColor: currentTheme === 'minimalist' 
-                ? 'rgba(255, 255, 255, 0.1)'
+                ? '#ffffff'
                 : `rgba(255, 217, 61, 0.4)`, // Translucent yellow for Nokia
               border: currentTheme === 'minimalist' 
                 ? `1px solid ${theme.colors.border}`
@@ -99,7 +99,7 @@ const Experience = () => {
               boxShadow: currentTheme === 'minimalist' 
                 ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                 : `8px 8px 0px 0px #000000`,
-              backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+              backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
               padding: '2rem',
               color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
             }}
@@ -136,7 +136,7 @@ const Experience = () => {
               <motion.div 
                 className={`p-4 ${
                   currentTheme === 'minimalist' 
-                    ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                    ? 'bg-gradient-to-b from-yellow-100 to-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                     : 'bg-black text-white transform -rotate-2'
                 } transition-transform duration-300`}
                 style={{
@@ -161,7 +161,7 @@ const Experience = () => {
                   currentTheme === 'extrovert' ? 'brutalist-all' : ''
                 } ${
                   currentTheme === 'minimalist' 
-                    ? 'bg-gray-100 text-gray-700 rounded-md' 
+                    ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                     : 'bg-black text-white transform rotate-2'
                 } transition-transform duration-300`}
                 style={{
@@ -304,7 +304,7 @@ const Experience = () => {
                         key={idx}
                         className={`px-3 py-2 text-sm ${
                           currentTheme === 'minimalist' 
-                            ? 'bg-gray-100 text-gray-700 rounded-lg' 
+                            ? 'bg-gradient-to-b from-gray-50 to-gray-100 text-gray-700 border border-gray-200 rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                             : 'bg-white text-black transform -rotate-1 hover:rotate-0'
                         } transition-transform duration-300`}
                         style={{

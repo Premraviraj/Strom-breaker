@@ -17,10 +17,10 @@ const About = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with Tinted Glass */}
         <div className="text-center mb-12 sm:mb-16">
-          <div className={`inline-block p-4 sm:p-6 rounded-2xl backdrop-blur-md ${
+          <div className={`inline-block p-4 sm:p-6 rounded-2xl backdrop-blur-none ${
             currentTheme === 'extrovert' 
               ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-              : 'bg-white/15 border border-gray-300/30 shadow-lg'
+              : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
           }`}>
             <h2 
               className={`${
@@ -52,16 +52,16 @@ const About = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className={`p-6 rounded-2xl backdrop-blur-md ${
+              className={`p-6 rounded-2xl backdrop-blur-none ${
                 currentTheme === 'extrovert' 
                   ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
               }`}
             >
               <div className="flex items-center mb-4">
                 <div className={`p-3 rounded-lg mr-4 ${
                   currentTheme === 'minimalist' 
-                    ? 'bg-gray-100 text-gray-800' 
+                    ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                     : 'bg-black text-white'
                 }`}>
                   <User size={24} />
@@ -104,16 +104,16 @@ const About = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className={`p-6 rounded-2xl backdrop-blur-md ${
+              className={`p-6 rounded-2xl backdrop-blur-none ${
                 currentTheme === 'extrovert' 
                   ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
               }`}
             >
               <div className="flex items-center mb-4">
                 <div className={`p-3 rounded-lg mr-4 ${
                   currentTheme === 'minimalist' 
-                    ? 'bg-gray-100 text-gray-800' 
+                    ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                     : 'bg-black text-white'
                 }`}>
                   <Code size={24} />
@@ -138,7 +138,7 @@ const About = () => {
                 ].map((skill, index) => (
                   <div key={index} className={`p-3 rounded-lg ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100/50' 
+                      ? 'bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black/20 border-2 border-black'
                   }`}>
                     <span className={`text-sm font-medium ${
@@ -159,16 +159,16 @@ const About = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className={`p-6 rounded-2xl backdrop-blur-md ${
+              className={`p-6 rounded-2xl backdrop-blur-none ${
                 currentTheme === 'extrovert' 
                   ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
               }`}
             >
               <div className="flex items-center mb-4">
                 <div className={`p-3 rounded-lg mr-4 ${
                   currentTheme === 'minimalist' 
-                    ? 'bg-gray-100 text-gray-800' 
+                    ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                     : 'bg-black text-white'
                 }`}>
                   <Target size={24} />
@@ -211,16 +211,16 @@ const About = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className={`p-6 rounded-2xl backdrop-blur-md ${
+              className={`p-6 rounded-2xl backdrop-blur-none ${
                 currentTheme === 'extrovert' 
                   ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
               }`}
             >
               <div className="flex items-center mb-4">
                 <div className={`p-3 rounded-lg mr-4 ${
                   currentTheme === 'minimalist' 
-                    ? 'bg-gray-100 text-gray-800' 
+                    ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                     : 'bg-black text-white'
                 }`}>
                   <Heart size={24} />
@@ -247,7 +247,7 @@ const About = () => {
                     key={index}
                     className={`px-3 py-1 text-xs font-medium rounded-full ${
                       currentTheme === 'minimalist' 
-                        ? 'bg-gray-100 text-gray-700' 
+                        ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                         : 'bg-black text-white border-2 border-black'
                     } ${currentTheme === 'extrovert' ? 'brutalist-all' : ''}`}
                   >

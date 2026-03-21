@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Award, BookOpen, Code, Briefcase, Trophy, GraduationCap, X, Github, ExternalLink, CheckCircle } from "lucide-react";
+import { Calendar, Award, BookOpen, Code, Briefcase, Trophy, GraduationCap, X, Github, ExternalLink, CheckCircle, Sparkles } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
 const Timeline = () => {
@@ -10,6 +10,26 @@ const Timeline = () => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   const timelineData = [
+    {
+      date: "Pre-2022",
+      title: "The Origin Story",
+      organization: "Before College",
+      description: "A curious kid who loved taking things apart to see how they worked — and occasionally putting them back together. The spark that started everything.",
+      detailedDescription: "Long before writing a single line of code, I was the kind of person who'd spend hours figuring out how things worked — from gadgets to games to the internet itself. Growing up in Kolar, Karnataka, I developed a deep curiosity for technology and problem-solving. I was drawn to computers early, teaching myself the basics through YouTube tutorials and online forums. That self-driven learning habit became the foundation for everything that followed.",
+      highlights: [
+        "Self-taught programming basics before formal education",
+        "Passionate about understanding how technology works",
+        "Strong problem-solving mindset developed early",
+        "Avid reader of tech blogs and online communities",
+        "Built first simple programs out of pure curiosity"
+      ],
+      skills: ["Curiosity", "Self-learning", "Problem Solving", "Logical Thinking", "Persistence"],
+      achievements: ["First self-built program", "Discovered passion for AI & tech"],
+      icon: Sparkles,
+      type: "about",
+      size: "large",
+      status: "completed"
+    },
     {
       date: "Dec 2022",
       title: "Started B.Tech CSE & AI",
@@ -203,6 +223,7 @@ const Timeline = () => {
 
   const getTypeColor = (type: string) => {
     const colors = {
+      about: currentTheme === 'minimalist' ? '#6366f1' : '#a855f7',
       education: currentTheme === 'minimalist' ? theme.colors.primary : '#FF6B9D',
       project: currentTheme === 'minimalist' ? theme.colors.secondary : '#00FF80',
       achievement: currentTheme === 'minimalist' ? '#f59e0b' : '#FFD93D',
@@ -304,20 +325,20 @@ const Timeline = () => {
               }`}
               style={{
                 backgroundColor: currentTheme === 'minimalist' 
-                  ? 'rgba(255, 255, 255, 0.1)'
+                  ? '#ffffff'
                   : getTypeColorWithOpacity(timelineData[0].type, 0.4),
                 border: currentTheme === 'minimalist' 
                   ? `1px solid ${theme.colors.border}`
                   : `4px solid #000000`,
                 boxShadow: currentTheme === 'minimalist' 
-                  ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
+                  ? `0 4px 6px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.05)`
                   : `8px 8px 0px 0px #000000`,
-                backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+                backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
                 color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
               }}
               whileHover={{
                 boxShadow: currentTheme === 'minimalist' 
-                  ? `0 10px 25px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)`
+                  ? `0 6px 12px rgba(0,0,0,0.15), 0 12px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(0,0,0,0.05)`
                   : `12px 12px 0px 0px #000000`,
                 transition: { duration: 0.3 }
               }}
@@ -334,7 +355,7 @@ const Timeline = () => {
                 <div 
                   className={`p-2 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                      ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform -rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -357,7 +378,7 @@ const Timeline = () => {
                 <div 
                   className={`text-xs font-bold px-2 py-1 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-700 rounded-md' 
+                      ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -429,7 +450,7 @@ const Timeline = () => {
               }`}
               style={{
                 backgroundColor: currentTheme === 'minimalist' 
-                  ? 'rgba(255, 255, 255, 0.1)'
+                  ? '#ffffff'
                   : getTypeColorWithOpacity(timelineData[1].type, 0.4),
                 border: currentTheme === 'minimalist' 
                   ? `1px solid ${theme.colors.border}`
@@ -437,7 +458,7 @@ const Timeline = () => {
                 boxShadow: currentTheme === 'minimalist' 
                   ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                   : `8px 8px 0px 0px #000000`,
-                backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+                backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
                 color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
               }}
               whileHover={{
@@ -459,7 +480,7 @@ const Timeline = () => {
                 <div 
                   className={`p-2 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                      ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform -rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -482,7 +503,7 @@ const Timeline = () => {
                 <div 
                   className={`text-xs font-bold px-2 py-1 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-700 rounded-md' 
+                      ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -548,7 +569,7 @@ const Timeline = () => {
               }`}
               style={{
                 backgroundColor: currentTheme === 'minimalist' 
-                  ? 'rgba(255, 255, 255, 0.1)'
+                  ? '#ffffff'
                   : getTypeColorWithOpacity(timelineData[2].type, 0.4),
                 border: currentTheme === 'minimalist' 
                   ? `1px solid ${theme.colors.border}`
@@ -556,7 +577,7 @@ const Timeline = () => {
                 boxShadow: currentTheme === 'minimalist' 
                   ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                   : `8px 8px 0px 0px #000000`,
-                backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+                backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
                 color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
               }}
             >
@@ -572,7 +593,7 @@ const Timeline = () => {
                 <div 
                   className={`p-2 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                      ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform -rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -595,7 +616,7 @@ const Timeline = () => {
                 <div 
                   className={`text-xs font-bold px-2 py-1 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-700 rounded-md' 
+                      ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -664,7 +685,7 @@ const Timeline = () => {
                 }`}
                 style={{
                   backgroundColor: currentTheme === 'minimalist' 
-                    ? 'rgba(255, 255, 255, 0.1)'
+                    ? '#ffffff'
                     : getTypeColorWithOpacity(timelineData[index].type, 0.4),
                   border: currentTheme === 'minimalist' 
                     ? `1px solid ${theme.colors.border}`
@@ -672,7 +693,7 @@ const Timeline = () => {
                   boxShadow: currentTheme === 'minimalist' 
                     ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                     : `8px 8px 0px 0px #000000`,
-                  backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+                  backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
                   color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
                 }}
               >
@@ -688,7 +709,7 @@ const Timeline = () => {
                   <div 
                     className={`p-2 ${
                       currentTheme === 'minimalist' 
-                        ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                        ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                         : 'bg-black text-white transform -rotate-2'
                     } transition-transform duration-300 group-hover:rotate-0`}
                     style={{
@@ -711,7 +732,7 @@ const Timeline = () => {
                   <div 
                     className={`text-xs font-bold px-2 py-1 ${
                       currentTheme === 'minimalist' 
-                        ? 'bg-gray-100 text-gray-700 rounded-md' 
+                        ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                         : 'bg-black text-white transform rotate-2'
                     } transition-transform duration-300 group-hover:rotate-0`}
                     style={{
@@ -781,7 +802,7 @@ const Timeline = () => {
               }`}
               style={{
                 backgroundColor: currentTheme === 'minimalist' 
-                  ? 'rgba(255, 255, 255, 0.1)'
+                  ? '#ffffff'
                   : getTypeColorWithOpacity(timelineData[7].type, 0.4),
                 border: currentTheme === 'minimalist' 
                   ? `1px solid ${theme.colors.border}`
@@ -789,7 +810,7 @@ const Timeline = () => {
                 boxShadow: currentTheme === 'minimalist' 
                   ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                   : `8px 8px 0px 0px #000000`,
-                backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+                backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
                 color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
               }}
             >
@@ -805,7 +826,7 @@ const Timeline = () => {
                 <div 
                   className={`p-2 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                      ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform -rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -828,7 +849,7 @@ const Timeline = () => {
                 <div 
                   className={`text-xs font-bold px-2 py-1 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-700 rounded-md' 
+                      ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -894,7 +915,7 @@ const Timeline = () => {
               }`}
               style={{
                 backgroundColor: currentTheme === 'minimalist' 
-                  ? 'rgba(255, 255, 255, 0.1)'
+                  ? '#ffffff'
                   : getTypeColorWithOpacity(timelineData[8].type, 0.4),
                 border: currentTheme === 'minimalist' 
                   ? `1px solid ${theme.colors.border}`
@@ -902,7 +923,7 @@ const Timeline = () => {
                 boxShadow: currentTheme === 'minimalist' 
                   ? `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
                   : `8px 8px 0px 0px #000000`,
-                backdropFilter: currentTheme === 'minimalist' ? 'blur(10px)' : 'blur(8px)',
+                backdropFilter: currentTheme === 'minimalist' ? 'none' : 'blur(8px)',
                 color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
               }}
             >
@@ -918,7 +939,7 @@ const Timeline = () => {
                 <div 
                   className={`p-2 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                      ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform -rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -941,7 +962,7 @@ const Timeline = () => {
                 <div 
                   className={`text-xs font-bold px-2 py-1 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-700 rounded-md' 
+                      ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                       : 'bg-black text-white transform rotate-2'
                   } transition-transform duration-300 group-hover:rotate-0`}
                   style={{
@@ -1015,15 +1036,15 @@ const Timeline = () => {
                 }`}
                 style={{
                   backgroundColor: currentTheme === 'minimalist' 
-                    ? 'rgba(255, 255, 255, 0.95)'
+                    ? '#ffffff'
                     : getTypeColor(timelineData[selectedItem].type),
                   border: currentTheme === 'minimalist' 
                     ? `1px solid ${theme.colors.border}`
                     : `4px solid #000000`,
                   boxShadow: currentTheme === 'minimalist' 
-                    ? `0 25px 50px -12px rgba(0, 0, 0, 0.25)`
+                    ? `0 10px 25px rgba(0,0,0,0.15), 0 20px 40px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.05)`
                     : `12px 12px 0px 0px #000000`,
-                  backdropFilter: currentTheme === 'minimalist' ? 'blur(20px)' : 'none',
+                  backdropFilter: currentTheme === 'minimalist' ? 'none' : 'none',
                   color: currentTheme === 'minimalist' ? theme.colors.text : '#000000'
                 }}
                 onClick={(e) => e.stopPropagation()}
@@ -1033,7 +1054,7 @@ const Timeline = () => {
                   onClick={() => setSelectedItem(null)}
                   className={`absolute top-4 right-4 p-3 hover:scale-110 transition-all duration-300 z-10 ${
                     currentTheme === 'minimalist' 
-                      ? 'bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200' 
+                      ? 'bg-gradient-to-b from-gray-100 to-gray-200 text-gray-700 border border-gray-300 rounded-full shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] hover:from-gray-200 hover:to-gray-300' 
                       : 'bg-black text-white transform rotate-12 hover:rotate-0'
                   }`}
                   style={{
@@ -1051,7 +1072,7 @@ const Timeline = () => {
                     <div 
                       className={`p-4 ${
                         currentTheme === 'minimalist' 
-                          ? 'bg-gray-100 text-gray-800 rounded-lg' 
+                          ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                           : 'bg-black text-white transform -rotate-2'
                       }`}
                       style={{
@@ -1087,8 +1108,10 @@ const Timeline = () => {
                           {timelineData[selectedItem].title}
                         </h2>
                         <span 
-                          className={`px-3 py-1 text-sm font-medium rounded-full ${
-                            timelineData[selectedItem].status === 'ongoing' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                          className={`px-3 py-1 text-sm font-medium rounded-full border ${
+                            timelineData[selectedItem].status === 'ongoing' 
+                              ? 'bg-gradient-to-b from-green-100 to-green-50 text-green-800 border-green-200 shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
+                              : 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border-blue-200 shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]'
                           }`}
                         >
                           {timelineData[selectedItem].status === 'ongoing' ? 'Ongoing' : 'Completed'}
@@ -1128,7 +1151,7 @@ const Timeline = () => {
                         rel="noopener noreferrer"
                         className={`inline-flex items-center space-x-2 px-4 py-2 transition-all duration-300 hover:scale-105 ${
                           currentTheme === 'minimalist'
-                            ? 'bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200'
+                            ? 'bg-gradient-to-b from-blue-100 to-blue-50 text-blue-800 border border-blue-200 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] hover:from-blue-200 hover:to-blue-100'
                             : 'bg-black text-white transform -rotate-1 hover:rotate-0'
                         }`}
                         style={{
@@ -1219,7 +1242,7 @@ const Timeline = () => {
                             key={idx}
                             className={`px-3 py-1 text-sm font-medium ${
                               currentTheme === 'minimalist' 
-                                ? 'bg-gray-100 text-gray-700 rounded-full' 
+                                ? 'bg-gradient-to-b from-gray-50 to-gray-100 text-gray-700 border border-gray-200 rounded-full shadow-[0_1px_3px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]' 
                                 : 'bg-black text-white transform -rotate-1 hover:rotate-0'
                             } transition-transform duration-300`}
                             style={{

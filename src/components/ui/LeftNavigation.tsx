@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Home, 
-  User, 
   Briefcase, 
   Code, 
   Mail,
-  Clock
+  Clock,
+  FolderOpen
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -29,12 +29,12 @@ const LeftNavigation = () => {
 
   // All navigation items
   const allNavItems: NavigationItem[] = [
-    { id: "home", label: "Welcome", icon: Home, href: "#home" },
-    { id: "timeline", label: "My Journey", icon: Clock, href: "#timeline" },
-    { id: "about", label: "About Me", icon: User, href: "#about" },
-    { id: "experience", label: "Work Experience", icon: Briefcase, href: "#experience" },
-    { id: "skills", label: "Technical Skills", icon: Code, href: "#skills" },
-    { id: "contact", label: "Get In Touch", icon: Mail, href: "#contact" },
+    { id: "home",       label: "Welcome",         icon: Home,       href: "#home" },
+    { id: "timeline",   label: "My Journey",      icon: Clock,      href: "#timeline" },
+    { id: "experience", label: "Work Experience",  icon: Briefcase,  href: "#experience" },
+    { id: "skills",     label: "Technical Skills", icon: Code,       href: "#skills" },
+    { id: "projects",   label: "My Work",          icon: FolderOpen, href: "#projects" },
+    { id: "contact",    label: "Get In Touch",     icon: Mail,       href: "#contact" },
   ];
 
   // Detect mobile device
@@ -135,19 +135,19 @@ const LeftNavigation = () => {
         >
           {/* Navigation Container */}
           <motion.div
-            className={`flex gap-3 p-4 backdrop-blur-xl ${
+            className={`flex gap-3 p-4 ${
               isMobile ? 'flex-row rounded-full' : 'flex-col rounded-2xl'
-            } ${isExtrovert ? 'brutalist-all' : ''}`}
+            } ${isExtrovert ? 'brutalist-all backdrop-blur-xl' : ''}`}
             style={{
               background: isExtrovert 
                 ? 'rgba(255,255,255,0.95)'
-                : 'rgba(0,0,0,0.8)',
+                : 'linear-gradient(to bottom, #ffffff, #f3f4f6)',
               border: isExtrovert 
                 ? '3px solid #000000'
-                : '1px solid rgba(255,255,255,0.2)',
+                : '1px solid #d1d5db',
               boxShadow: isExtrovert
                 ? '6px 6px 0px 0px #000000'
-                : '0 8px 32px rgba(0,0,0,0.3)',
+                : '0 4px 6px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.05)',
             }}
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -171,25 +171,38 @@ const LeftNavigation = () => {
                       background: isActive 
                         ? isExtrovert 
                           ? '#ffff00'
-                          : '#ffffff'
-                        : 'transparent',
+                          : 'linear-gradient(to bottom, #e5e7eb, #d1d5db)'
+                        : isExtrovert
+                          ? 'transparent'
+                          : 'linear-gradient(to bottom, #f9fafb, #f3f4f6)',
                       color: isActive 
-                        ? '#000000'
+                        ? isExtrovert ? '#000000' : '#1f2937'
                         : isExtrovert 
                           ? '#000000'
-                          : '#ffffff',
+                          : '#6b7280',
                       border: isActive && isExtrovert 
                         ? '2px solid #000000'
-                        : 'none',
+                        : isActive && !isExtrovert
+                          ? '1px solid #9ca3af'
+                          : !isExtrovert
+                            ? '1px solid #e5e7eb'
+                            : 'none',
                       boxShadow: isActive && isExtrovert
                         ? '3px 3px 0px 0px #000000'
-                        : 'none',
+                        : isActive && !isExtrovert
+                          ? '0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.1)'
+                          : !isExtrovert
+                            ? '0 1px 3px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.5)'
+                            : 'none',
                     }}
                     whileHover={{ 
                       scale: 1.1,
                       backgroundColor: isExtrovert 
                         ? isActive ? '#ffff00' : '#f0f0f0'
-                        : isActive ? '#ffffff' : 'rgba(255,255,255,0.1)',
+                        : undefined,
+                      boxShadow: isExtrovert
+                        ? undefined
+                        : '0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.6)',
                       transition: { duration: 0.2 }
                     }}
                     whileTap={{ scale: 0.95 }}
@@ -219,7 +232,8 @@ const LeftNavigation = () => {
                             : '-right-1 top-1/2 transform -translate-y-1/2'
                         }`}
                         style={{
-                          background: isExtrovert ? '#ff0080' : '#ffffff',
+                          background: isExtrovert ? '#ff0080' : 'linear-gradient(to bottom, #3b82f6, #2563eb)',
+                          boxShadow: isExtrovert ? 'none' : '0 1px 3px rgba(59, 130, 246, 0.5)',
                         }}
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -236,15 +250,15 @@ const LeftNavigation = () => {
                         }`}
                         style={{
                           background: isActive 
-                            ? (isExtrovert ? '#ffff00' : '#ffffff')
-                            : (isExtrovert ? '#ffffff' : 'rgba(0,0,0,0.9)'),
+                            ? (isExtrovert ? '#ffff00' : 'linear-gradient(to bottom, #e5e7eb, #d1d5db)')
+                            : (isExtrovert ? '#ffffff' : 'linear-gradient(to bottom, #ffffff, #f9fafb)'),
                           color: isActive 
-                            ? '#000000'
-                            : (isExtrovert ? '#000000' : '#ffffff'),
-                          border: isExtrovert ? '2px solid #000000' : 'none',
+                            ? (isExtrovert ? '#000000' : '#1f2937')
+                            : (isExtrovert ? '#000000' : '#374151'),
+                          border: isExtrovert ? '2px solid #000000' : '1px solid #d1d5db',
                           boxShadow: isExtrovert 
                             ? '3px 3px 0px 0px #000000'
-                            : '0 6px 20px rgba(0,0,0,0.4)',
+                            : '0 4px 6px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8)',
                           zIndex: 1000,
                         }}
                         initial={{ opacity: 0, x: -10, scale: 0.8 }}
@@ -282,8 +296,8 @@ const LeftNavigation = () => {
                             borderTop: '6px solid transparent',
                             borderBottom: '6px solid transparent',
                             borderRight: isActive 
-                              ? (isExtrovert ? '6px solid #ffff00' : '6px solid #ffffff')
-                              : (isExtrovert ? '6px solid #ffffff' : '6px solid rgba(0,0,0,0.9)'),
+                              ? (isExtrovert ? '6px solid #ffff00' : '6px solid #e5e7eb')
+                              : (isExtrovert ? '6px solid #ffffff' : '6px solid #ffffff'),
                           }}
                         />
                       </motion.div>
@@ -300,7 +314,7 @@ const LeftNavigation = () => {
                 style={{
                   borderColor: isExtrovert 
                     ? 'rgba(0,0,0,0.2)'
-                    : 'rgba(255,255,255,0.2)',
+                    : '#d1d5db',
                 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -312,7 +326,7 @@ const LeftNavigation = () => {
                       isExtrovert ? 'brutalist-all' : ''
                     }`}
                     style={{ 
-                      color: isExtrovert ? '#000000' : '#ffffff',
+                      color: isExtrovert ? '#000000' : '#374151',
                     }}
                   >
                     {allNavItems.findIndex(item => item.id === activeSection) + 1}/{allNavItems.length}
@@ -324,7 +338,10 @@ const LeftNavigation = () => {
                     style={{
                       background: isExtrovert 
                         ? 'rgba(0,0,0,0.2)'
-                        : 'rgba(255,255,255,0.2)',
+                        : '#e5e7eb',
+                      boxShadow: isExtrovert
+                        ? 'none'
+                        : 'inset 0 1px 2px rgba(0,0,0,0.1)',
                     }}
                   >
                     <motion.div
@@ -332,7 +349,10 @@ const LeftNavigation = () => {
                       style={{
                         background: isExtrovert 
                           ? 'linear-gradient(90deg, #ff0080, #ffff00, #00ff80)'
-                          : 'linear-gradient(90deg, #ffffff, #666666)',
+                          : 'linear-gradient(90deg, #3b82f6, #2563eb)',
+                        boxShadow: isExtrovert
+                          ? 'none'
+                          : '0 1px 3px rgba(59, 130, 246, 0.5)',
                       }}
                       initial={{ width: "0%" }}
                       animate={{ 

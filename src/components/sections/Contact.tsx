@@ -61,10 +61,10 @@ const Contact = () => {
         >
           <motion.div variants={fadeInUp} className="text-center mb-12 sm:mb-16">
             {/* Header Container with Tinted Glass */}
-            <div className={`inline-block p-4 sm:p-6 rounded-2xl backdrop-blur-md ${
+            <div className={`inline-block p-4 sm:p-6 rounded-2xl backdrop-blur-none ${
               isExtrovert 
                 ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
             }`}>
               <h2 className={`text-2xl sm:text-3xl lg:text-4xl mb-4 ${
                 currentTheme === 'minimalist' 
@@ -84,10 +84,10 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <motion.div variants={itemVariants}>
-              <Card className={`h-full backdrop-blur-md ${
+              <Card className={`h-full backdrop-blur-none ${
                 isExtrovert 
                   ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
               }`}>
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-semibold mb-6" style={{ color: theme.colors.text }}>Let's Connect</h3>
@@ -148,10 +148,10 @@ const Contact = () => {
 
             {/* Call to Action */}
             <motion.div variants={itemVariants}>
-              <Card className={`h-full backdrop-blur-md ${
+              <Card className={`h-full backdrop-blur-none ${
                 isExtrovert 
                   ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-white/15 border border-gray-300/30 shadow-lg'
+                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
               }`}>
                 <CardContent className="p-8 flex flex-col justify-center">
                   <div className="text-center">

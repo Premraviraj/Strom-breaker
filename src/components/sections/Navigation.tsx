@@ -93,17 +93,17 @@ const Navigation = () => {
                 className="transition-colors duration-200"
                 style={{ 
                   color: scrolled 
-                    ? (isExtrovert ? '#666666' : '#cccccc')
+                    ? (isExtrovert ? '#666666' : '#7f8c8d')
                     : theme.colors.textSecondary,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = scrolled 
-                    ? (isExtrovert ? '#000000' : '#ffffff')
+                    ? (isExtrovert ? '#000000' : '#2c3e50')
                     : theme.colors.text;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = scrolled 
-                    ? (isExtrovert ? '#666666' : '#cccccc')
+                    ? (isExtrovert ? '#666666' : '#7f8c8d')
                     : theme.colors.textSecondary;
                 }}
               >

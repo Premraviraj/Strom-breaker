@@ -71,13 +71,13 @@ const ThemeSwitcher = () => {
                 borderRadius: '24px',
                 background: isExtrovert 
                   ? 'linear-gradient(135deg, #ff0080 0%, #ffff00 100%)' 
-                  : 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)',
+                  : 'linear-gradient(to bottom, #e5e7eb, #d1d5db)',
                 border: isExtrovert 
                   ? '3px solid rgba(0,0,0,0.15)' 
-                  : '2px solid rgba(255,255,255,0.1)',
+                  : '1px solid #9ca3af',
                 boxShadow: isExtrovert
                   ? '0 8px 32px rgba(255,0,128,0.3), 0 2px 8px rgba(0,0,0,0.2)'
-                  : '0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)',
+                  : '0 2px 4px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.1)',
               }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -291,11 +291,11 @@ const ThemeSwitcher = () => {
                   style={{
                     background: isExtrovert 
                       ? 'rgba(255,255,255,0.95)'
-                      : 'rgba(0,0,0,0.9)',
-                    border: `1px solid ${isExtrovert ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)'}`,
+                      : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
+                    border: `1px solid ${isExtrovert ? 'rgba(0,0,0,0.1)' : '#d1d5db'}`,
                     boxShadow: isExtrovert
                       ? '0 20px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05)'
-                      : '0 20px 40px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3)',
+                      : '0 4px 6px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8)',
                     minWidth: '140px',
                   }}
                 >
@@ -322,13 +322,13 @@ const ThemeSwitcher = () => {
                     <div>
                       <div 
                         className="text-sm font-semibold"
-                        style={{ color: isExtrovert ? '#000000' : '#ffffff' }}
+                        style={{ color: isExtrovert ? '#000000' : '#2c3e50' }}
                       >
                         {theme.name}
                       </div>
                       <div 
                         className="text-xs opacity-70"
-                        style={{ color: isExtrovert ? '#000000' : '#ffffff' }}
+                        style={{ color: isExtrovert ? '#000000' : '#7f8c8d' }}
                       >
                         Click to switch
                       </div>
@@ -341,7 +341,7 @@ const ThemeSwitcher = () => {
                     style={{
                       borderLeft: '6px solid transparent',
                       borderRight: '6px solid transparent',
-                      borderTop: `6px solid ${isExtrovert ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.9)'}`,
+                      borderTop: `6px solid ${isExtrovert ? 'rgba(255,255,255,0.95)' : '#ffffff'}`,
                     }}
                   />
                 </motion.div>
@@ -352,10 +352,10 @@ const ThemeSwitcher = () => {
             <motion.div
               className="absolute -top-1 -right-1 w-3 h-3 rounded-full"
               style={{
-                background: isExtrovert ? '#00ff80' : '#ffffff',
+                background: isExtrovert ? '#00ff80' : 'linear-gradient(to bottom, #3b82f6, #2563eb)',
                 boxShadow: isExtrovert 
                   ? '0 0 8px rgba(0,255,128,0.6)'
-                  : '0 0 8px rgba(255,255,255,0.6)',
+                  : '0 0 8px rgba(59, 130, 246, 0.6), 0 1px 2px rgba(255,255,255,0.5)',
               }}
               animate={{
                 scale: [1, 1.2, 1],
