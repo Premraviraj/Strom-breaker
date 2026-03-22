@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ExternalLink, Github, Flag, Trophy, GitCompare,
-  Users, MapPin, Tv, BarChart2, Zap, TrendingUp, LucideIcon
+  Users, MapPin, Tv, BarChart2, TrendingUp, PieChart, Brain, Wallet, LucideIcon
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -171,18 +171,159 @@ const PROJECTS: Project[] = [
     ],
   },
 
-  // ── Add more projects below ──────────────────────────────────────────────────
-  // {
-  //   emoji: "💰",
-  //   title: "Expense Tracker",
-  //   subtitle: "React · TypeScript · LSTM",
-  //   description: "...",
-  //   liveUrl: "https://...",
-  //   githubUrl: "https://github.com/Premraviraj/ex_track",
-  //   accentColor: "#2e7d32",
-  //   techStack: ["React", "TypeScript", "Node.js", "LSTM", "Chart.js"],
-  //   features: [ ... ],
-  // },
+  {
+    emoji: "💸",
+    title: "ExpenseStory — Personal Finance Tracker",
+    subtitle: "Neo-Brutalist SPA · Vanilla JS · Node.js · Supabase",
+    description:
+      "A neo-brutalist single-page finance app with auth, a narrative InsightsEngine that turns spending into stories, community budget groups with invite codes, survival prediction (days of budget remaining), and an admin portal — all built with zero frontend framework.",
+    liveUrl: "https://money-matter-pi.vercel.app",
+    githubUrl: "https://github.com/Premraviraj/Expo",
+    accentColor: "#d97706",
+    techStack: ["Vanilla JS", "Node.js", "Express", "Supabase", "PostgreSQL", "Lucide", "Vercel"],
+    features: [
+      {
+        icon: BarChart2,
+        label: "Dashboard",
+        color: "#d97706",
+        desc: "Total spent, top category, daily average, income vs spend panel with survival prediction — how many days of budget remain at current burn rate.",
+        preview: (
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { label: "Total Spent",   val: "₹14,200", color: "#ef4444" },
+                { label: "Daily Avg",     val: "₹473",    color: "#f59e0b" },
+                { label: "Transactions",  val: "38",       color: "#3b82f6" },
+                { label: "Days Left",     val: "12 days",  color: "#10b981" },
+              ].map((s) => (
+                <div key={s.label} className="px-3 py-2 rounded-lg bg-white/80 border border-gray-200 text-center">
+                  <div className="text-sm font-black" style={{ color: s.color }}>{s.val}</div>
+                  <div className="text-[10px] text-gray-500">{s.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="px-3 py-2 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-700 font-medium text-center">
+              🔥 Budget survives ~12 more days at current burn
+            </div>
+          </div>
+        ),
+      },
+      {
+        icon: Brain,
+        label: "Stories",
+        color: "#7c3aed",
+        desc: "InsightsEngine generates narrative spending cards per category — most spent, rent %, shopping habits, food and entertainment patterns.",
+        preview: (
+          <div className="space-y-2">
+            {[
+              { emoji: "🍕", title: "Food Fanatic",    body: "You spent 34% of your budget on food this month — mostly weekends.",  color: "#ef4444" },
+              { emoji: "🛍️", title: "Shopping Spree",  body: "3 big purchases pushed shopping to ₹4,200 — highest in 3 months.",    color: "#3b82f6" },
+              { emoji: "🏠", title: "Rent Reality",    body: "Rent takes up 42% of income. That's above the recommended 30%.",       color: "#f59e0b" },
+            ].map((c) => (
+              <div key={c.title} className="flex gap-2 px-3 py-2 rounded-lg bg-white/80 border border-gray-200 text-xs">
+                <span className="text-base flex-shrink-0">{c.emoji}</span>
+                <div>
+                  <div className="font-bold" style={{ color: c.color }}>{c.title}</div>
+                  <div className="text-gray-500 text-[10px] leading-relaxed">{c.body}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        icon: TrendingUp,
+        label: "Trends",
+        color: "#0284c7",
+        desc: "Monthly bar charts, category breakdown, and spending patterns over time to spot where habits are shifting.",
+        preview: (
+          <div className="space-y-3">
+            <div className="flex items-end gap-1.5 h-16 px-1">
+              {[
+                { h: 55, label: "Oct" },
+                { h: 70, label: "Nov" },
+                { h: 45, label: "Dec" },
+                { h: 80, label: "Jan" },
+                { h: 60, label: "Feb" },
+                { h: 90, label: "Mar" },
+              ].map((m) => (
+                <div key={m.label} className="flex-1 flex flex-col items-center gap-1">
+                  <div className="w-full rounded-t bg-amber-400" style={{ height: `${m.h}%` }} />
+                  <span className="text-[9px] text-gray-400">{m.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-3 text-xs">
+              {[
+                { label: "Food",      pct: 34, color: "#ef4444" },
+                { label: "Shopping",  pct: 28, color: "#3b82f6" },
+                { label: "Transport", pct: 20, color: "#10b981" },
+              ].map((c) => (
+                <div key={c.label} className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: c.color }} />
+                  <span className="text-gray-600">{c.label} {c.pct}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ),
+      },
+      {
+        icon: Users,
+        label: "Community",
+        color: "#059669",
+        desc: "Create event-based budget groups with an invite code. Members join via code, track shared expenses per category, and see each member's contribution.",
+        preview: (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-green-50 border border-green-200 text-xs">
+              <span className="font-bold text-green-700">Goa Trip 🏖️</span>
+              <span className="font-mono text-green-600 bg-green-100 px-2 py-0.5 rounded text-[10px]">GOA-4X2</span>
+            </div>
+            {[
+              { name: "Prem",   amt: "₹3,200", pct: 40 },
+              { name: "Arjun",  amt: "₹2,800", pct: 35 },
+              { name: "Sneha",  amt: "₹2,000", pct: 25 },
+            ].map((m) => (
+              <div key={m.name} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/80 border border-gray-200 text-xs">
+                <span className="w-12 font-medium text-gray-700">{m.name}</span>
+                <div className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                  <div className="h-full rounded-full bg-green-400" style={{ width: `${m.pct}%` }} />
+                </div>
+                <span className="font-bold text-gray-700">{m.amt}</span>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        icon: Wallet,
+        label: "Auth & Profile",
+        color: "#6366f1",
+        desc: "Email signup with password strength meter, monthly income set at registration. Update name, nickname, and income from the profile page.",
+        preview: (
+          <div className="space-y-3">
+            <div className="px-3 py-3 rounded-lg bg-indigo-50 border border-indigo-200 space-y-2">
+              <div className="text-xs font-bold text-indigo-700">Sign Up</div>
+              <div className="h-2 rounded bg-gray-200 overflow-hidden">
+                <div className="h-full rounded bg-gradient-to-r from-red-400 via-yellow-400 to-green-500" style={{ width: "75%" }} />
+              </div>
+              <div className="text-[10px] text-indigo-500">Password strength: Strong</div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="px-3 py-2 rounded-lg bg-white/80 border border-gray-200">
+                <div className="text-[10px] text-gray-400">Monthly Income</div>
+                <div className="font-bold text-gray-800">₹45,000</div>
+              </div>
+              <div className="px-3 py-2 rounded-lg bg-white/80 border border-gray-200">
+                <div className="text-[10px] text-gray-400">Payment Filter</div>
+                <div className="font-bold text-gray-800">UPI / Cash / Card</div>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+    ],
+  },
 ];
 
 // ─── Shared style helpers ─────────────────────────────────────────────────────
@@ -427,7 +568,7 @@ const Projects = () => {
             My <span style={{ color: theme.colors.textSecondary }}>Work</span>
           </motion.h2>
           <p style={{ color: theme.colors.textSecondary }}>
-            Live projects I've shipped — click the feature tabs to explore
+            Click the feature tabs to explore each project
           </p>
         </motion.div>
 
