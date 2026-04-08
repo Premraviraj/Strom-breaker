@@ -4,7 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ExternalLink, Github, Flag, Trophy, GitCompare,
-  Users, MapPin, Tv, BarChart2, TrendingUp, PieChart, Brain, Wallet, LucideIcon
+  Users, MapPin, Tv, BarChart2, TrendingUp, PieChart, Brain, Wallet, 
+  Bus, Coins, Gift, Leaf, Shield, LucideIcon
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -40,7 +41,7 @@ const PROJECTS: Project[] = [
     subtitle: "Formula 1 Race Data · Next.js · Ergast API",
     description:
       "A full-stack Formula 1 dashboard aggregating live standings, race schedules, driver profiles, circuit data, and head-to-head comparisons — all in one place. Deployed on Vercel.",
-    liveUrl: "https://pitwall-nu.vercel.app",
+    liveUrl: "https://pitwall.rprem.online",
     githubUrl: "https://github.com/Premraviraj/Fast",
     accentColor: "#e10600",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Ergast API", "Recharts", "Framer Motion", "Vercel"],
@@ -177,7 +178,7 @@ const PROJECTS: Project[] = [
     subtitle: "Neo-Brutalist SPA · Vanilla JS · Node.js · Supabase",
     description:
       "A neo-brutalist single-page finance app with auth, a narrative InsightsEngine that turns spending into stories, community budget groups with invite codes, survival prediction (days of budget remaining), and an admin portal — all built with zero frontend framework.",
-    liveUrl: "https://money-matter-pi.vercel.app",
+    liveUrl: "https://moneymatter.rprem.online",
     githubUrl: "https://github.com/Premraviraj/Expo",
     accentColor: "#d97706",
     techStack: ["Vanilla JS", "Node.js", "Express", "Supabase", "PostgreSQL", "Lucide", "Vercel"],
@@ -324,6 +325,141 @@ const PROJECTS: Project[] = [
       },
     ],
   },
+
+  {
+    emoji: "🚌",
+    title: "TRIPP — Bangalore Transit Rewards",
+    subtitle: "Public Transit · React + Vite · Supabase · Razorpay",
+    description:
+      "A Bangalore public transit rewards app. Book trips across BMTC, Namma Metro, KSRTC, and Railway — pay via Razorpay — and earn TRT tokens proportional to distance. Redeem tokens for bike rentals, bus passes, and movie tickets.",
+    liveUrl: "https://tripp.rprem.online",
+    githubUrl: "https://github.com/Premraviraj/major",
+    accentColor: "#16a34a",
+    techStack: ["React 18", "Vite", "Supabase", "Razorpay", "React Leaflet", "Chart.js", "Vercel"],
+    features: [
+      {
+        icon: Bus,
+        label: "Book & Pay",
+        color: "#16a34a",
+        desc: "Book trips across BMTC bus, Namma Metro, KSRTC, and Railway. Pay via Razorpay checkout and earn TRT tokens proportional to distance travelled.",
+        preview: (
+          <div className="space-y-2">
+            {[
+              { icon: "🚌", name: "BMTC Bus",     route: "Majestic → Koramangala", tokens: "+12 TRT" },
+              { icon: "🚇", name: "Namma Metro",  route: "MG Road → Whitefield",   tokens: "+18 TRT" },
+              { icon: "🚂", name: "Railway",      route: "KSR → Yeshwanthpur",     tokens: "+25 TRT" },
+            ].map((t) => (
+              <div key={t.name} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/80 border border-gray-200 text-xs">
+                <span className="text-base">{t.icon}</span>
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-800">{t.name}</div>
+                  <div className="text-gray-400 text-[10px]">{t.route}</div>
+                </div>
+                <span className="font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">{t.tokens}</span>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        icon: Coins,
+        label: "TRT Tokens",
+        color: "#d97706",
+        desc: "Earn TRT tokens on every trip based on distance and transport type. Token balance, earned/spent breakdown, and a unified transaction timeline in the Wallet.",
+        preview: (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200">
+              <div>
+                <div className="text-[10px] text-amber-600 font-medium">Total Balance</div>
+                <div className="text-2xl font-black text-amber-700">1,240 TRT</div>
+              </div>
+              <div className="text-3xl">🪙</div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="px-3 py-2 rounded-lg bg-green-50 border border-green-200 text-center">
+                <div className="font-black text-green-700">+2,100</div>
+                <div className="text-[10px] text-green-500">Earned</div>
+              </div>
+              <div className="px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-center">
+                <div className="font-black text-red-600">-860</div>
+                <div className="text-[10px] text-red-400">Spent</div>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        icon: Gift,
+        label: "Rewards",
+        color: "#7c3aed",
+        desc: "Redeem TRT tokens from a DB-driven reward catalog — bike rentals, bus passes, movie tickets, and more. Filter by category, see token cost per reward.",
+        preview: (
+          <div className="space-y-2">
+            {[
+              { emoji: "🛵", name: "Yulu Bike — 1hr",   cost: "80 TRT",  cat: "Mobility" },
+              { emoji: "🎟️", name: "BMTC Day Pass",      cost: "150 TRT", cat: "Transit"  },
+              { emoji: "🎬", name: "PVR Movie Ticket",   cost: "200 TRT", cat: "Leisure"  },
+            ].map((r) => (
+              <div key={r.name} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/80 border border-gray-200 text-xs">
+                <span className="text-base">{r.emoji}</span>
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-800">{r.name}</div>
+                  <div className="text-gray-400 text-[10px]">{r.cat}</div>
+                </div>
+                <span className="font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">{r.cost}</span>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        icon: Leaf,
+        label: "Eco Stats",
+        color: "#059669",
+        desc: "Track CO₂ saved per trip based on transport type config stored in DB. Dashboard shows total CO₂ saved, trip count, and leaderboard ranking.",
+        preview: (
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-2 text-xs text-center">
+              {[
+                { val: "14.2 kg", label: "CO₂ Saved", color: "#059669" },
+                { val: "38",      label: "Trips",      color: "#0284c7" },
+                { val: "#4",      label: "Leaderboard",color: "#d97706" },
+              ].map((s) => (
+                <div key={s.label} className="px-2 py-2 rounded-lg bg-white/80 border border-gray-200">
+                  <div className="font-black text-sm" style={{ color: s.color }}>{s.val}</div>
+                  <div className="text-[10px] text-gray-400">{s.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="px-3 py-2 rounded-lg bg-green-50 border border-green-200 text-xs text-green-700 text-center font-medium">
+              🌱 Equivalent to planting 2 trees this month
+            </div>
+          </div>
+        ),
+      },
+      {
+        icon: Shield,
+        label: "Audit Chain",
+        color: "#1e40af",
+        desc: "Every token transaction is stored in an append-only SHA-256 hash chain — each entry hashes userId, distance, tokens, timestamp, and the previous hash. Tamper-evident without a real blockchain.",
+        preview: (
+          <div className="space-y-2">
+            <div className="px-3 py-2 rounded-lg bg-blue-50 border border-blue-200 text-xs font-mono text-blue-700 break-all leading-relaxed">
+              <div className="text-[10px] text-blue-400 mb-1">entry_hash</div>
+              a3f9c2...d84e1b
+            </div>
+            <div className="flex items-center gap-2 text-[10px] text-gray-500 px-1">
+              <div className="w-2 h-2 rounded-full bg-blue-400" />
+              SHA-256(userId | distance | tokens | timestamp | prevHash)
+            </div>
+            <div className="px-3 py-2 rounded-lg bg-white/80 border border-gray-200 text-[10px] text-gray-500">
+              Append-only · No wallet · No gas · Tamper-evident
+            </div>
+          </div>
+        ),
+      },
+    ],
+  },
 ];
 
 // ─── Shared style helpers ─────────────────────────────────────────────────────
@@ -334,211 +470,181 @@ const skeuBtn   = `bg-gradient-to-b from-gray-700 to-gray-900 text-white border 
 
 // ─── Single project card ──────────────────────────────────────────────────────
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const { theme, currentTheme } = useTheme();
   const isExtrovert = currentTheme === "extrovert";
   const [activeFeature, setActiveFeature] = useState(0);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className={`overflow-hidden ${isExtrovert ? "border-4 border-black" : skeuCard}`}
-      style={isExtrovert ? {
-        backgroundColor: `${project.accentColor}18`,
-        boxShadow: "10px 10px 0px 0px #000",
-      } : {}}
-      whileHover={{
-        y: -4,
-        boxShadow: isExtrovert
-          ? "14px 14px 0px 0px #000000"
-          : "0 8px 12px rgba(0,0,0,0.15), 0 16px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
-        transition: { duration: 0.3 },
-      }}
+      className={`relative overflow-hidden ${
+        isExtrovert
+          ? "border-4 border-black"
+          : "rounded-2xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.06),0_16px_40px_rgba(0,0,0,0.08)]"
+      }`}
+      style={isExtrovert ? { backgroundColor: `${project.accentColor}12`, boxShadow: "12px 12px 0px 0px #000" } : { background: "white" }}
     >
-      {/* Extrovert decorative dots */}
-      {isExtrovert && (
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-3 left-3 w-4 h-4 bg-black rotate-45" />
-          <div className="absolute top-6 right-5 w-3 h-3 bg-black rounded-full" />
-          <div className="absolute bottom-5 left-5 w-2 h-7 bg-black rotate-12" />
-          <div className="absolute bottom-3 right-3 w-7 h-2 bg-black rotate-45" />
-        </div>
+      {/* Accent strip top */}
+      {!isExtrovert && (
+        <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${project.accentColor}, ${project.accentColor}66)` }} />
       )}
 
-      {/* Browser chrome */}
-      <div className={`flex items-center gap-3 px-4 py-3 border-b ${
+      {/* Browser chrome bar */}
+      <div className={`flex items-center gap-3 px-5 py-3 border-b ${
         isExtrovert
           ? "bg-black border-black"
-          : "bg-gradient-to-b from-gray-200 to-gray-100 border-gray-300 shadow-[inset_0_-1px_0_rgba(0,0,0,0.1)]"
+          : "bg-gray-50/80 border-gray-100"
       }`}>
         <div className="flex gap-1.5">
           {["#ff5f57","#febc2e","#28c840"].map((c) => (
-            <div key={c} className="w-3 h-3 rounded-full" style={{ backgroundColor: c }} />
+            <div key={c} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: c }} />
           ))}
         </div>
-        <div className={`flex-1 flex items-center gap-2 px-3 py-1 rounded-md text-xs ${
+        <div className={`flex-1 flex items-center gap-2 px-3 py-1 rounded-md text-xs font-mono ${
           isExtrovert
-            ? "bg-white/20 text-white border border-white/30"
-            : "bg-white border border-gray-300 text-gray-600 shadow-[inset_0_1px_3px_rgba(0,0,0,0.1)]"
+            ? "bg-white/10 text-white/80 border border-white/20"
+            : "bg-white border border-gray-200 text-gray-400 shadow-inner"
         }`}>
-          <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
+          <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
           {project.liveUrl ? project.liveUrl.replace("https://","") : "localhost:3000"}
         </div>
-        {project.liveUrl && (
-          <motion.a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold ${
-              isExtrovert
-                ? "bg-yellow-400 text-black border-2 border-white brutalist-all"
-                : `${skeuBtn} text-xs`
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ExternalLink size={11} /> Live
-          </motion.a>
-        )}
+        <div className="flex items-center gap-2">
+          {project.githubUrl && (
+            <motion.a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md ${
+                isExtrovert ? "bg-white text-black border-2 border-white" : "bg-white border border-gray-200 text-gray-600 hover:border-gray-400 shadow-sm"
+              }`}
+              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+            >
+              <Github size={11} /> Code
+            </motion.a>
+          )}
+          {project.liveUrl && (
+            <motion.a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md ${
+                isExtrovert ? "bg-yellow-400 text-black border-2 border-white" : "text-white shadow-sm"
+              }`}
+              style={!isExtrovert ? { background: project.accentColor } : {}}
+              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+            >
+              <ExternalLink size={11} /> Live
+            </motion.a>
+          )}
+        </div>
       </div>
 
-      <div className="p-6 sm:p-8">
-        {/* Title row */}
-        <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-8">
-          <motion.div
-            className={`w-14 h-14 flex-shrink-0 flex items-center justify-center text-2xl ${
-              isExtrovert
-                ? "bg-black text-white border-2 border-black transform -rotate-2"
-                : "rounded-xl border shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.2)]"
-            }`}
-            style={!isExtrovert ? {
-              background: `linear-gradient(to bottom, ${project.accentColor}cc, ${project.accentColor})`,
-              borderColor: project.accentColor,
-            } : {}}
-            whileHover={{ rotate: 0, scale: 1.1 }}
-          >
-            {project.emoji}
-          </motion.div>
-          <div className="flex-1">
-            <h3
-              className={`text-xl sm:text-2xl font-bold mb-1 ${isExtrovert ? "brutalist-all uppercase" : "minimalist-heading"}`}
-              style={{ color: theme.colors.text }}
+      <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
+        {/* ── Left sidebar ── */}
+        <div className={`p-5 lg:p-6 flex flex-col gap-4 ${
+          isExtrovert ? "border-b-4 lg:border-b-0 lg:border-r-4 border-black" : "border-b lg:border-b-0 lg:border-r border-gray-100 bg-gray-50/40"
+        }`}>
+          {/* Project number + emoji — compact row */}
+          <div className="flex items-center gap-2.5">
+            <span
+              className={`text-2xl font-black leading-none select-none tabular-nums ${isExtrovert ? "text-black" : ""}`}
+              style={!isExtrovert ? { color: `${project.accentColor}55` } : {}}
             >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div className={`w-px h-6 ${isExtrovert ? "bg-black" : "bg-gray-300"}`} />
+            <motion.div
+              className={`w-9 h-9 flex items-center justify-center text-lg flex-shrink-0 ${
+                isExtrovert ? "bg-black text-white border-2 border-black" : "rounded-lg"
+              }`}
+              style={!isExtrovert ? {
+                background: `linear-gradient(135deg, ${project.accentColor}22, ${project.accentColor}44)`,
+                border: `1.5px solid ${project.accentColor}44`,
+              } : {}}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+            >
+              {project.emoji}
+            </motion.div>
+          </div>
+
+          {/* Title + description */}
+          <div>
+            <h3 className={`text-base font-bold leading-tight mb-1 ${isExtrovert ? "brutalist-all uppercase" : "minimalist-heading"}`}
+              style={{ color: theme.colors.text }}>
               {project.title}
             </h3>
-            <p className="text-xs mb-2" style={{ color: theme.colors.textSecondary }}>{project.subtitle}</p>
-            <p className={`text-sm leading-relaxed ${isExtrovert ? "brutalist-all" : "minimalist-body"}`} style={{ color: theme.colors.textSecondary }}>
+            <p className="text-[10px] mb-2.5 font-medium" style={{ color: project.accentColor }}>{project.subtitle}</p>
+            <p className={`text-xs leading-relaxed ${isExtrovert ? "brutalist-all" : "minimalist-body"}`}
+              style={{ color: theme.colors.textSecondary }}>
               {project.description}
             </p>
           </div>
-        </div>
 
-        {/* Feature explorer */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {/* Tabs */}
-          <div className="lg:col-span-2 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-            {project.features.map((f, i) => (
-              <motion.button
-                key={f.label}
-                onClick={() => setActiveFeature(i)}
-                className={`flex items-center gap-3 px-4 py-3 text-left text-sm font-medium flex-shrink-0 lg:flex-shrink transition-all duration-200 ${
-                  isExtrovert
-                    ? activeFeature === i
-                      ? "bg-black text-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.3)] brutalist-all"
-                      : "bg-white text-black border-2 border-black brutalist-all hover:bg-gray-100"
-                    : activeFeature === i
-                      ? "bg-gradient-to-b from-gray-800 to-gray-900 text-white rounded-xl border border-gray-700 shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.1)]"
-                      : `${skeuCard} text-gray-700 hover:shadow-[0_6px_12px_rgba(0,0,0,0.12)]`
-                }`}
-                whileHover={{ x: isExtrovert ? 0 : 3 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <f.icon size={16} style={{ color: activeFeature === i ? (isExtrovert ? "#fff" : f.color) : f.color, flexShrink: 0 }} />
-                <span className="whitespace-nowrap lg:whitespace-normal">{f.label}</span>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Preview panel */}
-          <div className="lg:col-span-3">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeFeature}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.25 }}
-                className={`p-5 min-h-[220px] ${
-                  isExtrovert ? "border-2 border-black bg-white shadow-[4px_4px_0px_0px_#000]" : skeuCard
-                }`}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  {(() => { const F = project.features[activeFeature]; return <F.icon size={16} style={{ color: F.color }} />; })()}
-                  <span className={`text-sm font-semibold ${isExtrovert ? "brutalist-all" : ""}`} style={{ color: theme.colors.text }}>
-                    {project.features[activeFeature].label}
-                  </span>
-                </div>
-                <p className="text-xs leading-relaxed mb-4" style={{ color: theme.colors.textSecondary }}>
-                  {project.features[activeFeature].desc}
-                </p>
-                {project.features[activeFeature].preview}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Footer: tech stack + links */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-6 border-t border-gray-200">
-          <div className="flex flex-wrap gap-2">
+          {/* Tech stack */}
+          <div className="flex flex-wrap gap-1.5 mt-auto">
             {project.techStack.map((t) => (
-              <span key={t} className={`px-3 py-1 text-xs font-semibold ${
-                isExtrovert ? "bg-black text-white border-2 border-black brutalist-all" : `${skeuBadge} text-gray-700`
-              }`}>
+              <span key={t} className={`px-2 py-0.5 text-[10px] font-semibold ${
+                isExtrovert
+                  ? "bg-black text-white border-2 border-black brutalist-all"
+                  : "rounded-full border text-gray-600"
+              }`}
+              style={!isExtrovert ? { borderColor: `${project.accentColor}44`, background: `${project.accentColor}08` } : {}}>
                 {t}
               </span>
             ))}
           </div>
-          <div className="flex gap-3 flex-shrink-0">
-            {project.githubUrl && (
-              <motion.a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold ${
+        </div>
+
+        {/* ── Right: feature explorer ── */}
+        <div className="p-6 lg:p-8 flex flex-col gap-4">
+          {/* Feature tabs — horizontal scrollable row */}
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {project.features.map((f, i) => (
+              <motion.button
+                key={f.label}
+                onClick={() => setActiveFeature(i)}
+                className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold flex-shrink-0 transition-all duration-200 ${
                   isExtrovert
-                    ? "bg-black text-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.3)] brutalist-all"
-                    : skeuBtn
+                    ? activeFeature === i
+                      ? "bg-black text-white border-2 border-black brutalist-all"
+                      : "bg-white text-black border-2 border-black brutalist-all hover:bg-gray-100"
+                    : activeFeature === i
+                      ? "rounded-lg text-white shadow-sm"
+                      : "rounded-lg bg-white border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700"
                 }`}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                style={!isExtrovert && activeFeature === i ? { background: project.accentColor } : {}}
+                whileTap={{ scale: 0.96 }}
               >
-                <Github size={14} /> GitHub
-              </motion.a>
-            )}
-            {project.liveUrl && (
-              <motion.a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold ${
-                  isExtrovert
-                    ? "bg-yellow-400 text-black border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.3)] brutalist-all"
-                    : `rounded-lg border text-white shadow-[0_2px_4px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]`
-                }`}
-                style={!isExtrovert ? {
-                  background: `linear-gradient(to bottom, ${project.accentColor}cc, ${project.accentColor})`,
-                  borderColor: project.accentColor,
-                } : {}}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ExternalLink size={14} /> Visit Site
-              </motion.a>
-            )}
+                <f.icon size={13} style={{ color: activeFeature === i && !isExtrovert ? "white" : f.color }} />
+                {f.label}
+              </motion.button>
+            ))}
           </div>
+
+          {/* Feature preview panel */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFeature}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className={`flex-1 p-5 min-h-[240px] ${
+                isExtrovert
+                  ? "border-2 border-black bg-white shadow-[4px_4px_0px_0px_#000]"
+                  : "rounded-xl border border-gray-100 bg-gray-50/60"
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                {(() => { const F = project.features[activeFeature]; return <F.icon size={15} style={{ color: F.color }} />; })()}
+                <span className={`text-sm font-semibold ${isExtrovert ? "brutalist-all" : ""}`} style={{ color: theme.colors.text }}>
+                  {project.features[activeFeature].label}
+                </span>
+              </div>
+              <p className="text-xs leading-relaxed mb-4 text-gray-500">
+                {project.features[activeFeature].desc}
+              </p>
+              {project.features[activeFeature].preview}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>
@@ -572,9 +678,9 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="space-y-12">
-          {PROJECTS.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+        <div className="space-y-10">
+          {PROJECTS.map((project, i) => (
+            <ProjectCard key={project.title} project={project} index={i} />
           ))}
         </div>
       </div>
