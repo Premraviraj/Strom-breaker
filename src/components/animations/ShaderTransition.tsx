@@ -410,25 +410,23 @@ const ShaderTransition = ({ isVisible, onComplete }: ShaderTransitionProps) => {
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <h1 
-                className={`text-4xl mb-4 ${
-                  isMinimalist ? 'font-light' : 'font-bold'
-                }`}
+                className={`text-lg mb-1 ${isMinimalist ? 'font-light' : 'font-bold'}`}
                 style={{ 
                   color: isMinimalist ? '#1e293b' : '#ffffff',
                   fontFamily: 'Inter, sans-serif',
                   letterSpacing: isMinimalist ? '0.05em' : '-0.01em'
                 }}
               >
-                {isMinimalist ? 'Minimalist Experience' : 'Extrovert Experience'}
+                {isMinimalist ? 'Minimalist' : 'Extrovert'}
               </h1>
               <p 
-                className="text-lg opacity-80"
+                className="text-xs opacity-70"
                 style={{ 
                   color: isMinimalist ? '#64748b' : 'rgba(255,255,255,0.9)',
                   fontFamily: 'Space Grotesk, monospace'
                 }}
               >
-                {isMinimalist ? 'Clean • Focused • Elegant' : 'Bold • Vibrant • Dynamic'}
+                {isMinimalist ? 'Clean · Focused · Elegant' : 'Bold · Vibrant · Dynamic'}
               </p>
             </motion.div>
           </div>

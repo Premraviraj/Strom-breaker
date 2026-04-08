@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Space_Grotesk, Oswald } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,7 +71,6 @@ export default function RootLayout({
       >
         <ThemeProvider>
           {children}
-          <ThemeSwitcher />
         </ThemeProvider>
       </body>
     </html>
