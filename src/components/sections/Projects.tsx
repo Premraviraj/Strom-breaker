@@ -494,44 +494,44 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
       )}
 
       {/* Browser chrome bar */}
-      <div className={`flex items-center gap-3 px-5 py-3 border-b ${
+      <div className={`flex items-center gap-2 px-3 py-2 border-b ${
         isExtrovert
           ? "bg-black border-black"
           : "bg-gray-50/80 border-gray-100"
       }`}>
-        <div className="flex gap-1.5">
+        <div className="flex gap-1 flex-shrink-0">
           {["#ff5f57","#febc2e","#28c840"].map((c) => (
-            <div key={c} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: c }} />
+            <div key={c} className="w-2 h-2 rounded-full" style={{ backgroundColor: c }} />
           ))}
         </div>
-        <div className={`flex-1 flex items-center gap-2 px-3 py-1 rounded-md text-xs font-mono ${
+        <div className={`flex-1 min-w-0 flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-mono ${
           isExtrovert
             ? "bg-white/10 text-white/80 border border-white/20"
             : "bg-white border border-gray-200 text-gray-400 shadow-inner"
         }`}>
           <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-          {project.liveUrl ? project.liveUrl.replace("https://","") : "localhost:3000"}
+          <span className="truncate">{project.liveUrl ? project.liveUrl.replace("https://","") : "localhost:3000"}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 flex-shrink-0">
           {project.githubUrl && (
             <motion.a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md ${
-                isExtrovert ? "bg-white text-black border-2 border-white" : "bg-white border border-gray-200 text-gray-600 hover:border-gray-400 shadow-sm"
+              className={`flex items-center gap-1 px-2 py-1 text-[10px] font-semibold rounded-md ${
+                isExtrovert ? "bg-white text-black border-2 border-white" : "bg-white border border-gray-200 text-gray-600 shadow-sm"
               }`}
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             >
-              <Github size={11} /> Code
+              <Github size={10} /> <span className="hidden sm:inline">Code</span>
             </motion.a>
           )}
           {project.liveUrl && (
             <motion.a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md ${
+              className={`flex items-center gap-1 px-2 py-1 text-[10px] font-semibold rounded-md ${
                 isExtrovert ? "bg-yellow-400 text-black border-2 border-white" : "text-white shadow-sm"
               }`}
               style={!isExtrovert ? { background: project.accentColor } : {}}
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             >
-              <ExternalLink size={11} /> Live
+              <ExternalLink size={10} /> <span className="hidden sm:inline">Live</span>
             </motion.a>
           )}
         </div>
@@ -539,7 +539,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 
       <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
         {/* ── Left sidebar ── */}
-        <div className={`p-5 lg:p-6 flex flex-col gap-4 ${
+        <div className={`p-4 lg:p-6 flex flex-col gap-3 lg:gap-4 ${
           isExtrovert ? "border-b-4 lg:border-b-0 lg:border-r-4 border-black" : "border-b lg:border-b-0 lg:border-r border-gray-100 bg-gray-50/40"
         }`}>
           {/* Project number + emoji — compact row */}
@@ -567,11 +567,11 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 
           {/* Title + description */}
           <div>
-            <h3 className={`text-base font-bold leading-tight mb-1 ${isExtrovert ? "brutalist-all uppercase" : "minimalist-heading"}`}
+            <h3 className={`text-sm font-bold leading-tight mb-1 ${isExtrovert ? "brutalist-all uppercase" : "minimalist-heading"}`}
               style={{ color: theme.colors.text }}>
               {project.title}
             </h3>
-            <p className="text-[10px] mb-2.5 font-medium" style={{ color: project.accentColor }}>{project.subtitle}</p>
+            <p className="text-[10px] mb-2 font-medium" style={{ color: project.accentColor }}>{project.subtitle}</p>
             <p className={`text-xs leading-relaxed ${isExtrovert ? "brutalist-all" : "minimalist-body"}`}
               style={{ color: theme.colors.textSecondary }}>
               {project.description}
@@ -579,7 +579,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           </div>
 
           {/* Tech stack */}
-          <div className="flex flex-wrap gap-1.5 mt-auto">
+          <div className="flex flex-wrap gap-1 mt-auto">
             {project.techStack.map((t) => (
               <span key={t} className={`px-2 py-0.5 text-[10px] font-semibold ${
                 isExtrovert
@@ -594,14 +594,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
 
         {/* ── Right: feature explorer ── */}
-        <div className="p-6 lg:p-8 flex flex-col gap-4">
+        <div className="p-4 lg:p-6 flex flex-col gap-3">
           {/* Feature tabs — horizontal scrollable row */}
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
             {project.features.map((f, i) => (
               <motion.button
                 key={f.label}
                 onClick={() => setActiveFeature(i)}
-                className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold flex-shrink-0 transition-all duration-200 ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-semibold flex-shrink-0 transition-all duration-200 ${
                   isExtrovert
                     ? activeFeature === i
                       ? "bg-black text-white border-2 border-black brutalist-all"
@@ -613,7 +613,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                 style={!isExtrovert && activeFeature === i ? { background: project.accentColor } : {}}
                 whileTap={{ scale: 0.96 }}
               >
-                <f.icon size={13} style={{ color: activeFeature === i && !isExtrovert ? "white" : f.color }} />
+                <f.icon size={11} style={{ color: activeFeature === i && !isExtrovert ? "white" : f.color }} />
                 {f.label}
               </motion.button>
             ))}
@@ -627,19 +627,19 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className={`flex-1 p-5 min-h-[240px] ${
+              className={`flex-1 p-4 min-h-[200px] ${
                 isExtrovert
                   ? "border-2 border-black bg-white shadow-[4px_4px_0px_0px_#000]"
                   : "rounded-xl border border-gray-100 bg-gray-50/60"
               }`}
             >
               <div className="flex items-center gap-2 mb-2">
-                {(() => { const F = project.features[activeFeature]; return <F.icon size={15} style={{ color: F.color }} />; })()}
-                <span className={`text-sm font-semibold ${isExtrovert ? "brutalist-all" : ""}`} style={{ color: theme.colors.text }}>
+                {(() => { const F = project.features[activeFeature]; return <F.icon size={13} style={{ color: F.color }} />; })()}
+                <span className={`text-xs font-semibold ${isExtrovert ? "brutalist-all" : ""}`} style={{ color: theme.colors.text }}>
                   {project.features[activeFeature].label}
                 </span>
               </div>
-              <p className="text-xs leading-relaxed mb-4 text-gray-500">
+              <p className="text-[11px] leading-relaxed mb-3 text-gray-500">
                 {project.features[activeFeature].desc}
               </p>
               {project.features[activeFeature].preview}
@@ -658,8 +658,8 @@ const Projects = () => {
   const isExtrovert = currentTheme === "extrovert";
 
   return (
-    <section id="projects" className="py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-12 sm:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: -20 }}
@@ -678,7 +678,7 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="space-y-10">
+        <div className="space-y-6 sm:space-y-10">
           {PROJECTS.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i} />
           ))}
