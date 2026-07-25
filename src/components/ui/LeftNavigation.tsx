@@ -1,24 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { User, Code2, Briefcase, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { User, Code2, Briefcase, Mail, Layers, Rocket } from "lucide-react";
 
 const sections = [
-  { id: "hero", icon: User, label: "Profile" },
-  { id: "timeline", icon: Briefcase, label: "Journey" },
-  { id: "skills", icon: Code2, label: "Skills" },
-  { id: "projects", icon: Code2, label: "Work" },
-  { id: "aakrit", icon: Code2, label: "Aakrit" },
-  { id: "contact", icon: Mail, label: "Contact" },
+  { id: "hero",       icon: User,      label: "Profile",  color: "#0038FF" }, // Blue
+  { id: "skills",     icon: Code2,     label: "Arsenal",  color: "#FF3B30" }, // Red
+  { id: "timeline",   icon: Briefcase, label: "Journey",  color: "#10b981" }, // Emerald
+  { id: "experience", icon: Layers,    label: "Work",     color: "#8b5cf6" }, // Purple
+  { id: "projects",   icon: Code2,     label: "Projects", color: "#eab308" }, // Gold
+  { id: "aakrit",     icon: Rocket,    label: "Aakrit",   color: "#f97316" }, // Orange
+  { id: "contact",    icon: Mail,      label: "Contact",  color: "#062314" }, // Dark Green
 ];
 
 const LeftNavigation = () => {
   const [activeSection, setActiveSection] = useState("hero");
+  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      if (window.scrollY < 100) {
+        setActiveSection("hero");
+        return;
+      }
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i].id);
@@ -27,13 +34,9 @@ const LeftNavigation = () => {
           break;
         }
       }
-
-      if (window.scrollY < 100) {
-        setActiveSection("hero");
-      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -49,32 +52,50 @@ const LeftNavigation = () => {
   };
 
   return (
-    <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6">
-      {sections.map((section) => {
-        const isActive = activeSection === section.id;
-        return (
-          <button
-            key={section.id}
-            onClick={() => scrollTo(section.id)}
-            className="relative group flex items-center"
-          >
-            <motion.div
-              animate={{
-                scale: isActive ? 1.5 : 1,
-                backgroundColor: isActive ? "#ff3b6b" : "#e2e8f0",
-              }}
-              className="w-3 h-3 rounded-full transition-colors duration-300 shadow-sm"
-            />
+    <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center">
+      {/* Sleek Floating Glass Capsule */}
+      <div className="flex flex-col items-center gap-2 bg-white/70 backdrop-blur-xl border border-[#062314]/5 p-2 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+        {sections.map((section) => {
+          const isActive = activeSection === section.id;
+          const isHovered = hovered === section.id;
+          const Icon = section.icon;
 
-            {/* Tooltip */}
-            <div className={`absolute left-8 px-3 py-1 bg-white text-[#062314] text-xs font-bold rounded-lg shadow-lg whitespace-nowrap transition-all duration-200 pointer-events-none
-              ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0"}
-            `}>
-              {section.label}
-            </div>
-          </button>
-        );
-      })}
+          return (
+            <button
+              key={section.id}
+              onClick={() => scrollTo(section.id)}
+              onMouseEnter={() => setHovered(section.id)}
+              onMouseLeave={() => setHovered(null)}
+              className="relative group flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300"
+              style={{
+                backgroundColor: isActive ? section.color : isHovered ? `${section.color}1A` : "transparent",
+                color: isActive ? "#ffffff" : isHovered ? section.color : "#062314",
+                opacity: isActive || isHovered ? 1 : 0.45
+              }}
+              aria-label={section.label}
+            >
+              <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+
+              {/* Minimal Tooltip */}
+              <AnimatePresence>
+                {(isActive || isHovered) && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -8, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -8, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute left-[calc(100%+14px)] px-3 py-1.5 bg-[#062314] text-white text-[10px] font-black tracking-[0.15em] uppercase rounded-lg shadow-xl whitespace-nowrap pointer-events-none"
+                  >
+                    {section.label}
+                    {/* Tiny triangle arrow pointing left */}
+                    <span className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-b-[4px] border-r-[4px] border-t-transparent border-b-transparent border-r-[#062314]" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

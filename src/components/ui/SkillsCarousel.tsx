@@ -81,11 +81,11 @@ const SkillsCarousel = ({
       >
         {items.map((item, idx) => (
           <li
-            className={`w-[160px] sm:w-[210px] md:w-[280px] max-w-full relative rounded-[3rem] border-4 border-transparent flex-shrink-0 px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ${item.color} ${item.textColor}`}
+            className={`h-[72px] sm:h-[96px] md:h-[120px] w-[160px] sm:w-[210px] md:w-[280px] max-w-full relative rounded-[3rem] border-4 border-transparent flex-shrink-0 px-2 sm:px-6 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ${item.color} ${item.textColor}`}
             key={item.name + idx}
           >
             <div className="flex flex-col items-center justify-center text-center gap-2 h-full">
-              <span className="text-lg sm:text-2xl md:text-3xl font-black tracking-tight">{item.name}</span>
+              <span className="text-lg sm:text-2xl md:text-3xl font-black tracking-tight leading-tight">{item.name}</span>
             </div>
           </li>
         ))}
