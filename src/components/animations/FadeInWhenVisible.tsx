@@ -8,13 +8,15 @@ interface FadeInWhenVisibleProps {
   delay?: number;
   duration?: number;
   direction?: "up" | "down" | "left" | "right";
+  className?: string;
 }
 
 const FadeInWhenVisible = ({ 
   children, 
   delay = 0, 
   duration = 0.6, 
-  direction = "up" 
+  direction = "up",
+  className = ""
 }: FadeInWhenVisibleProps) => {
   const directionOffset = {
     up: { y: 30, x: 0 },
@@ -25,6 +27,7 @@ const FadeInWhenVisible = ({
 
   return (
     <motion.div
+      className={className}
       initial={{ 
         opacity: 0, 
         ...directionOffset[direction] 

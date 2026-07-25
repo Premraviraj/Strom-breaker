@@ -1,199 +1,218 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { staggerContainer, fadeInUp, itemVariants } from "@/lib/animations";
-import { useTheme } from "../../contexts/ThemeContext";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Github, Linkedin, Mail, Instagram, CheckCircle2, ArrowRight, Copy } from "lucide-react";
+import FadeInWhenVisible from "../animations/FadeInWhenVisible";
+
+const socialLinks = [
+  { icon: Github, label: "GitHub", handle: "@Premraviraj", href: "https://github.com/Premraviraj", color: "#062314" },
+  { icon: Linkedin, label: "LinkedIn", handle: "prem-r", href: "https://www.linkedin.com/in/prem-r-8b8337247/", color: "#0038FF" },
+  { icon: Instagram, label: "Instagram", handle: "@thenarratorwithinsomnia", href: "https://www.instagram.com/thenarratorwithinsomnia", color: "#FF3B30" },
+  { icon: Mail, label: "Email", handle: "Premraviraj0906@gmail.com", href: "mailto:Premraviraj0906@gmail.com", color: "#FFE800" },
+];
+
+const prompts = [
+  "I have a project idea…",
+  "I want to collaborate…",
+  "I'd like to hire you…",
+  "Just saying hi 👋",
+];
 
 const Contact = () => {
-  const { theme, currentTheme } = useTheme();
-  const isExtrovert = currentTheme === 'extrovert';
-  
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "Premraviraj0906@gmail.com",
-      href: "mailto:Premraviraj0906@gmail.com",
-      color: "text-foreground",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 6360663007",
-      href: "tel:+916360663007",
-      color: "text-foreground",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Kolar, Karnataka, India",
-      href: "#",
-      color: "text-foreground",
-    },
-  ];
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [sent, setSent] = useState(false);
+  const [activePrompt, setActivePrompt] = useState<string | null>(null);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const socialLinks = [
-    {
-      icon: Github,
-      label: "GitHub",
-      href: "https://github.com/Premraviraj",
-      color: "hover:text-foreground",
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/prem-r-8b8337247/",
-      color: "hover:text-foreground",
-    },
-  ];
+  const handlePromptClick = (prompt: string) => {
+    setActivePrompt(prompt);
+    setMessage(prompt + " ");
+    textareaRef.current?.focus();
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("Premraviraj0906@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !message) return;
+    setSent(true);
+    setTimeout(() => {
+      setSent(false);
+      setName("");
+      setMessage("");
+      setActivePrompt(null);
+    }, 4000);
+  };
 
   return (
-    <section id="contact" className="py-16 sm:py-20">
+    <section id="contact" className="w-full relative z-10 bg-[#fdfbfb] py-20 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.div variants={fadeInUp} className="text-center mb-12 sm:mb-16">
-            {/* Header Container with Tinted Glass */}
-            <div className={`inline-block p-4 sm:p-6 rounded-2xl backdrop-blur-none ${
-              isExtrovert 
-                ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
-            }`}>
-              <h2 className={`text-2xl sm:text-3xl lg:text-4xl mb-4 ${
-                currentTheme === 'minimalist' 
-                  ? 'font-bold tracking-tight minimalist-heading' 
-                  : 'brutalist-heading'
-              }`} style={{ color: theme.colors.text }}>
-                Get In <span style={{ color: theme.colors.textSecondary }}>Touch</span>
-              </h2>
-              <p className={`max-w-2xl mx-auto ${
-                currentTheme === 'extrovert' ? 'brutalist-all' : ''
-              }`} style={{ color: theme.colors.textSecondary }}>
-                I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology and innovation.
-              </p>
-            </div>
-          </motion.div>
+        <FadeInWhenVisible>
+          <div className="mb-16">
+            <h2 className="text-[clamp(4rem,12vw,10rem)] font-black text-[#062314] tracking-tighter leading-[0.85]">
+              Let&apos;s<br />
+              <span className="text-[#0038FF]">Talk.</span>
+            </h2>
+          </div>
+        </FadeInWhenVisible>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <motion.div variants={itemVariants}>
-              <Card className={`h-full backdrop-blur-none ${
-                isExtrovert 
-                  ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
-              }`}>
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold mb-6" style={{ color: theme.colors.text }}>Let's Connect</h3>
-                  <p className="mb-8 leading-relaxed" style={{ color: theme.colors.textSecondary }}>
-                    I'm currently seeking internship opportunities where I can contribute 
-                    to innovative projects and continue learning. Whether you have a project 
-                    in mind, want to collaborate, or just want to say hello, I'd love to hear from you!
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+
+          {/* LEFT — Form */}
+          <FadeInWhenVisible delay={0.1}>
+            <AnimatePresence mode="wait">
+              {sent ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center text-center gap-6 h-full min-h-[400px] bg-[#0038FF] rounded-[3rem] p-16"
+                >
+                  <CheckCircle2 size={80} className="text-[#FFE800]" />
+                  <h3 className="text-4xl font-black text-white">Message Sent!</h3>
+                  <p className="text-xl text-white/80 font-medium">
+                    Thanks {name}! I&apos;ll get back to you soon.
                   </p>
-
-                  <div className="space-y-6">
-                    {contactInfo.map((info) => (
-                      <motion.div
-                        key={info.label}
-                        whileHover={{ x: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <a
-                          href={info.href}
-                          className="flex items-center group cursor-pointer"
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-6"
+                  initial={{ opacity: 1 }}
+                >
+                  {/* Quick-start prompts */}
+                  <div>
+                    <p className="text-sm font-black uppercase tracking-widest text-[#062314]/40 mb-3">
+                      Quick start →
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {prompts.map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => handlePromptClick(p)}
+                          className={`px-4 py-2 rounded-full text-sm font-bold transition-all border-2 ${
+                            activePrompt === p
+                              ? "bg-[#0038FF] text-white border-[#0038FF]"
+                              : "bg-white text-[#062314] border-[#062314]/10 hover:border-[#0038FF] hover:text-[#0038FF]"
+                          }`}
                         >
-                          <div className={`p-3 rounded-lg mr-4 group-hover:bg-primary/10 transition-colors duration-200`} style={{ backgroundColor: theme.colors.surface }}>
-                            <info.icon className="h-5 w-5" style={{ color: theme.colors.text }} />
-                          </div>
-                          <div>
-                            <p className="text-sm" style={{ color: theme.colors.textSecondary }}>{info.label}</p>
-                            <p className="font-medium group-hover:text-primary transition-colors duration-200" style={{ color: theme.colors.text }}>
-                              {info.value}
-                            </p>
-                          </div>
-                        </a>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 pt-8" style={{ borderTop: `1px solid ${theme.colors.border}` }}>
-                    <h4 className="font-semibold mb-4" style={{ color: theme.colors.text }}>Find me online</h4>
-                    <div className="flex space-x-4">
-                      {socialLinks.map((link) => (
-                        <motion.a
-                          key={link.label}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`p-3 rounded-lg transition-all duration-200`}
-                          style={{ backgroundColor: theme.colors.surface, color: theme.colors.text }}
-                          title={link.label}
-                        >
-                          <link.icon className="h-5 w-5" />
-                        </motion.a>
+                          {p}
+                        </button>
                       ))}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
 
-            {/* Call to Action */}
-            <motion.div variants={itemVariants}>
-              <Card className={`h-full backdrop-blur-none ${
-                isExtrovert 
-                  ? 'bg-white/20 border-4 border-black shadow-[8px_8px_0px_0px_#000000]' 
-                  : 'bg-gradient-to-b from-white to-gray-50 border border-gray-300 shadow-[0_4px_6px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(0,0,0,0.05)]'
-              }`}>
-                <CardContent className="p-8 flex flex-col justify-center">
-                  <div className="text-center">
-                    <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: theme.colors.surface }}>
-                      <Mail className="h-12 w-12" style={{ color: theme.colors.text }} />
+                  {/* Name */}
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="w-full px-6 py-5 bg-white border-2 border-[#062314]/10 rounded-2xl text-xl font-medium text-[#062314] placeholder:text-[#062314]/30 focus:outline-none focus:border-[#0038FF] transition-colors"
+                  />
+
+                  {/* Message */}
+                  <div className="relative">
+                    <textarea
+                      ref={textareaRef}
+                      placeholder="Your message…"
+                      rows={5}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      required
+                      className="w-full px-6 py-5 bg-white border-2 border-[#062314]/10 rounded-2xl text-xl font-medium text-[#062314] placeholder:text-[#062314]/30 focus:outline-none focus:border-[#0038FF] transition-colors resize-none"
+                    />
+                    <span className="absolute bottom-4 right-5 text-xs text-[#062314]/30 font-mono">
+                      {message.length}
+                    </span>
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="submit"
+                    disabled={!name || !message}
+                    className="flex items-center justify-center gap-4 w-full py-6 bg-[#0038FF] text-white rounded-2xl font-black text-xl shadow-[0_10px_40px_rgba(0,56,255,0.3)] hover:shadow-[0_15px_50px_rgba(0,56,255,0.5)] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Send Message
+                    <Send size={24} />
+                  </motion.button>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </FadeInWhenVisible>
+
+          {/* RIGHT — Social links */}
+          <FadeInWhenVisible delay={0.2}>
+            <div className="flex flex-col gap-4">
+              {socialLinks.map((link, i) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target={link.label !== "Email" ? "_blank" : undefined}
+                  rel="noreferrer"
+                  initial={{ x: 40, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 12 }}
+                  className="group flex items-center justify-between p-6 bg-white rounded-2xl border-2 border-transparent hover:border-[#062314] transition-all duration-200 shadow-sm hover:shadow-xl"
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: link.color === "#FFE800" ? "#FFE800" : link.color + "15" }}
+                    >
+                      <link.icon
+                        size={26}
+                        style={{ color: link.color === "#FFE800" ? "#062314" : link.color }}
+                      />
                     </div>
-                    
-                    <h3 className="text-2xl font-semibold mb-4" style={{ color: theme.colors.text }}>Ready to Start a Conversation?</h3>
-                    <p className="mb-8 leading-relaxed" style={{ color: theme.colors.textSecondary }}>
-                      I'm actively looking for internship opportunities and exciting projects 
-                      to work on. Let's discuss how we can create something amazing together!
-                    </p>
-
-                    <div className="space-y-4">
-                      <Button size="lg" className={`w-full ${theme.styles.buttonClass}`} asChild>
-                        <a href="mailto:Premraviraj0906@gmail.com">
-                          <Mail className="mr-2 h-4 w-4" />
-                          Send me an email
-                        </a>
-                      </Button>
-                      
-                      <Button variant="outline" size="lg" className={`w-full ${theme.styles.cardClass}`} asChild>
-                        <a href="https://www.linkedin.com/in/prem-r-8b8337247/" target="_blank" rel="noopener noreferrer">
-                          <Linkedin className="mr-2 h-4 w-4" />
-                          Connect on LinkedIn
-                        </a>
-                      </Button>
-                    </div>
-
-                    <div className="mt-8 p-4 rounded-lg" style={{ backgroundColor: theme.colors.surface }}>
-                      <p className="text-sm" style={{ color: theme.colors.textSecondary }}>
-                        <strong style={{ color: theme.colors.text }}>Current Status:</strong> Available for internships and freelance projects
-                      </p>
+                    <div>
+                      <p className="text-sm font-black uppercase tracking-widest text-[#062314]/40">{link.label}</p>
+                      <p className="text-lg font-bold text-[#062314]">{link.handle}</p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+                  <ArrowRight
+                    size={24}
+                    className="text-[#062314]/20 group-hover:text-[#0038FF] group-hover:translate-x-2 transition-all"
+                  />
+                </motion.a>
+              ))}
 
-
-        </motion.div>
+              {/* Copy email pill */}
+              <motion.button
+                onClick={handleCopyEmail}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="mt-2 flex items-center justify-center gap-3 py-4 px-6 bg-[#FFE800] text-[#062314] rounded-full font-black text-base tracking-wide transition-all"
+              >
+                <AnimatePresence mode="wait">
+                  {copiedEmail ? (
+                    <motion.span key="copied" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2">
+                      <CheckCircle2 size={18} /> Copied!
+                    </motion.span>
+                  ) : (
+                    <motion.span key="copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2">
+                      <Copy size={18} /> Copy Email Address
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            </div>
+          </FadeInWhenVisible>
+        </div>
       </div>
     </section>
   );

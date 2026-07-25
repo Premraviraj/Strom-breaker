@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Space_Grotesk, Oswald } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,25 +36,29 @@ const oswald = Oswald({
   display: "swap",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "Prem R - Full Stack Developer & AI Enthusiast",
-  description: "Portfolio of Prem R - A passionate 3rd-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
+  description: "Portfolio of Prem R - A passionate 4th-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
   keywords: ["Prem R", "Full Stack Developer", "AI/ML", "React", "Next.js", "Python", "Portfolio"],
   authors: [{ name: "Prem R" }],
   creator: "Prem R",
-  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://premr.dev",
     title: "Prem R - Full Stack Developer & AI Enthusiast",
-    description: "Portfolio of Prem R - A passionate 3rd-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
+    description: "Portfolio of Prem R - A passionate 4th-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
     siteName: "Prem R Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Prem R - Full Stack Developer & AI Enthusiast",
-    description: "Portfolio of Prem R - A passionate 3rd-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
+    description: "Portfolio of Prem R - A passionate 4th-year engineering student specializing in AI/ML, full-stack development, and innovative solutions.",
   },
 };
 
@@ -69,9 +72,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${spaceGrotesk.variable} ${oswald.variable} antialiased min-h-screen bg-background font-sans`}
       >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

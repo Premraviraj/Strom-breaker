@@ -2,115 +2,86 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Instagram } from "lucide-react";
-import { useTheme } from "../../contexts/ThemeContext";
+import { Github, Linkedin, Mail, Smile } from "lucide-react";
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showName, setShowName] = useState(false);
-  const { theme, currentTheme } = useTheme();
-  const isExtrovert = currentTheme === 'extrovert';
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const heroHeight = window.innerHeight * 0.3; // Show name after scrolling 30% of viewport
-      
-      setScrolled(scrollPosition > 50);
-      setShowName(scrollPosition > heroHeight);
+      setScrolled(window.scrollY > 50);
+      setShowName(window.scrollY > window.innerHeight * 0.3);
     };
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navigationItems = [
-    { label: "About", href: "#about" },
-    { label: "My Journey", href: "#timeline" },
-    { label: "Experience", href: "#experience" },
-    { label: "Skills", href: "#skills" },
-    { label: "Contact", href: "#contact" },
-  ];
-
   const socialLinks = [
-    { icon: Github, href: "https://github.com/Premraviraj", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/prem-r-8b8337247/", label: "LinkedIn" },
-    { icon: Instagram, href: "https://www.instagram.com/thenarratorwithinsomnia", label: "Instagram" },
-    { icon: Mail, href: "mailto:Premraviraj0906@gmail.com", label: "Email" },
+    { icon: Github,   href: "https://github.com/Premraviraj",                         label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/prem-r-8b8337247/",          label: "LinkedIn" },
+    { icon: Mail,     href: "mailto:Premraviraj0906@gmail.com",                        label: "Email" },
   ];
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? isExtrovert
-            ? 'bg-white/95 border-b-4 border-black shadow-[0_4px_0px_0px_#000000] backdrop-blur-md'
-            : 'bg-black/80 backdrop-blur-md border-b border-white/20'
-          : "bg-transparent"
-      }`}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full
+        ${scrolled
+          ? "w-[92%] max-w-3xl bg-white/90 backdrop-blur-md shadow-xl shadow-black/5 py-2.5 px-4"
+          : "w-[96%] max-w-7xl bg-transparent py-3 px-2"
+        }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo/Name - Shows only when scrolled */}
-          <div className="flex items-center">
-            <AnimatePresence>
-              {showName && (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className={`text-2xl font-bold ${
-                    currentTheme === 'extrovert' ? 'brutalist-heading' : 'minimalist-heading'
-                  }`}
-                  style={{ 
-                    color: scrolled 
-                      ? (isExtrovert ? '#000000' : '#ffffff')
-                      : theme.colors.text,
-                    fontWeight: currentTheme === 'minimalist' ? '700' : '900',
-                    textTransform: currentTheme === 'minimalist' ? 'none' : 'uppercase',
-                    letterSpacing: currentTheme === 'minimalist' ? 'normal' : '-0.02em'
-                  }}
-                >
-                  {currentTheme === 'minimalist' ? 'Prem R' : 'PREM R'}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+      <div className="flex justify-between items-center gap-3">
 
-          {/* Social Links */}
-          <div className="flex items-center space-x-4">
-            {socialLinks.map((link) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="transition-colors duration-200"
-                style={{ 
-                  color: scrolled 
-                    ? (isExtrovert ? '#666666' : '#7f8c8d')
-                    : theme.colors.textSecondary,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = scrolled 
-                    ? (isExtrovert ? '#000000' : '#2c3e50')
-                    : theme.colors.text;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = scrolled 
-                    ? (isExtrovert ? '#666666' : '#7f8c8d')
-                    : theme.colors.textSecondary;
-                }}
+        {/* Logo + Name */}
+        <div className="flex items-center gap-2.5 shrink-0">
+          <motion.div
+            whileHover={{ rotate: 180 }}
+            transition={{ duration: 0.3 }}
+            className={`flex items-center justify-center w-9 h-9 rounded-full shrink-0 ${
+              scrolled ? "bg-[#0038FF] text-white" : "bg-white text-[#0038FF] shadow-md"
+            }`}
+          >
+            <Smile size={18} />
+          </motion.div>
+
+          <AnimatePresence>
+            {(showName || !scrolled) && (
+              <motion.span
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                className="font-bold text-base tracking-tight text-[#062314] overflow-hidden whitespace-nowrap"
               >
-                <link.icon size={20} />
-              </motion.a>
-            ))}
-          </div>
+                Prem R.
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Social links — icons only on mobile, icons + tooltip on hover on desktop */}
+        <div className="flex items-center gap-1">
+          {socialLinks.map((link) => (
+            <motion.a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              title={link.label}
+              className={`p-2 rounded-full transition-colors ${
+                scrolled
+                  ? "text-[#062314] hover:bg-[#0038FF] hover:text-white"
+                  : "bg-white text-[#062314] shadow-md hover:bg-[#0038FF] hover:text-white"
+              }`}
+            >
+              <link.icon size={18} />
+            </motion.a>
+          ))}
         </div>
       </div>
     </motion.nav>

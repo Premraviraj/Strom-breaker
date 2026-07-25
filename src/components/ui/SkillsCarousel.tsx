@@ -1,298 +1,105 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { useTheme } from "../../contexts/ThemeContext";
+import React, { useEffect, useState, useRef } from "react";
 
-interface Skill {
+type SkillItem = {
   name: string;
-  logoUrl: string;
+  level: number;
   color: string;
-  category: string;
+  textColor: string;
+};
+
+interface SkillsCarouselProps {
+  items: SkillItem[];
+  direction?: "left" | "right";
+  speed?: "fast" | "normal" | "slow";
 }
 
-const SkillsCarousel = () => {
-  const { theme, currentTheme } = useTheme();
-  const [isPaused, setIsPaused] = useState(false);
+const SkillsCarousel = ({
+  items,
+  direction = "left",
+  speed = "normal",
+}: SkillsCarouselProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLUListElement>(null);
 
-  // Focus on core programming languages and frameworks with actual logos
-  const skills: Skill[] = [
-    {
-      name: "Python",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      color: "#3776AB",
-      category: "Language"
-    },
-    {
-      name: "JavaScript",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      color: "#F7DF1E",
-      category: "Language"
-    },
-    {
-      name: "TypeScript",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      color: "#3178C6",
-      category: "Language"
-    },
-    {
-      name: "React",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      color: "#61DAFB",
-      category: "Framework"
-    },
-    {
-      name: "Node.js",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      color: "#339933",
-      category: "Runtime"
-    },
-    {
-      name: "Next.js",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-      color: currentTheme === 'minimalist' ? "#000000" : "#FFFFFF",
-      category: "Framework"
-    },
-    {
-      name: "MongoDB",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-      color: "#47A248",
-      category: "Database"
-    },
-    {
-      name: "PyTorch",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
-      color: "#EE4C2C",
-      category: "AI/ML"
-    },
-    {
-      name: "Flask",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
-      color: currentTheme === 'minimalist' ? "#000000" : "#FFFFFF",
-      category: "Framework"
-    },
-    {
-      name: "Git",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-      color: "#F05032",
-      category: "Tool"
-    },
-    {
-      name: "Jira",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg",
-      color: "#0052CC",
-      category: "Tool"
-    },
-    {
-      name: "Jenkins",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg",
-      color: "#D33833",
-      category: "CI/CD"
-    },
-    {
-      name: "Oxygen Writer",
-      logoUrl: "https://www.oxygenxml.com/img/resources/oxygen_author_256.png",
-      color: "#FF6B35",
-      category: "Writing"
-    },
-    {
-      name: "Inkscape",
-      logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/inkscape/inkscape-original.svg",
-      color: "#000000",
-      category: "Design"
-    },
-  ];
+  useEffect(() => {
+    addAnimation();
+  }, []);
 
-  const handleMouseEnter = () => {
-    setIsPaused(true);
+  const [start, setStart] = useState(false);
+
+  function addAnimation() {
+    if (containerRef.current && scrollerRef.current) {
+      const scrollerContent = Array.from(scrollerRef.current.children);
+
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        if (scrollerRef.current) {
+          scrollerRef.current.appendChild(duplicatedItem);
+        }
+      });
+
+      getDirection();
+      getSpeed();
+      setStart(true);
+    }
+  }
+
+  const getDirection = () => {
+    if (containerRef.current) {
+      if (direction === "left") {
+        containerRef.current.style.setProperty("--animation-direction", "forwards");
+      } else {
+        containerRef.current.style.setProperty("--animation-direction", "reverse");
+      }
+    }
   };
 
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-  };
-
-  // Get theme-specific card styling with tinted glass effect
-  const getCardStyle = (skill: Skill) => {
-    const baseStyle = {
-      width: '140px',
-      height: '180px',
-      borderRadius: '16px',
-      padding: '24px',
-      display: 'flex',
-      flexDirection: 'column' as const,
-      alignItems: 'center',
-      justifyContent: 'center',
-      transition: 'all 0.3s ease',
-      position: 'relative' as const,
-      overflow: 'hidden',
-      cursor: 'pointer',
-      flexShrink: 0,
-      backdropFilter: 'blur(12px)',
-    };
-
-    // Apply theme-specific tinted glass styling
-    switch (currentTheme) {
-      case 'minimalist':
-        return {
-          ...baseStyle,
-          border: `1px solid rgba(255, 255, 255, 0.3)`,
-          backgroundColor: 'rgba(255, 255, 255, 0.15)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-        };
-      case 'extrovert':
-        return {
-          ...baseStyle,
-          border: `4px solid ${skill.color}`,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          boxShadow: `8px 8px 0px 0px ${skill.color}`,
-        };
-      default:
-        return {
-          ...baseStyle,
-          border: `1px solid rgba(255, 255, 255, 0.3)`,
-          backgroundColor: 'rgba(255, 255, 255, 0.15)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-        };
+  const getSpeed = () => {
+    if (containerRef.current) {
+      if (speed === "fast") {
+        containerRef.current.style.setProperty("--animation-duration", "20s");
+      } else if (speed === "normal") {
+        containerRef.current.style.setProperty("--animation-duration", "40s");
+      } else {
+        containerRef.current.style.setProperty("--animation-duration", "80s");
+      }
     }
   };
 
   return (
-    <div className="relative w-full h-80 overflow-hidden">
-      {/* Add the keyframes animation for linear movement */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          @keyframes skillsLinearMove {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-          }
-        `
-      }} />
-      
-      <div 
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          overflow: 'hidden',
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+    <div
+      ref={containerRef}
+      className={`scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]`}
+    >
+      <ul
+        ref={scrollerRef}
+        className={`flex min-w-full shrink-0 gap-6 py-4 w-max flex-nowrap ${
+          start ? "animate-scroll" : ""
+        }`}
       >
-        {/* Single continuous strip */}
-        <div 
-          style={{
-            display: 'flex',
-            gap: '30px',
-            animation: 'skillsLinearMove 60s linear infinite',
-            animationPlayState: isPaused ? 'paused' : 'running',
-            minWidth: 'max-content',
-          }}
-        >
-          {/* Render skills multiple times for seamless loop - need enough copies for true infinite scroll */}
-          {[...Array(8)].map((_, setIndex) => (
-            skills.map((skill, index) => (
-              <div
-                key={`${setIndex}-${skill.name}`}
-                style={{
-                  position: 'relative',
-                  flexShrink: 0,
-                }}
-              >
-                <div style={getCardStyle(skill)}>
-                  {/* Background effect based on theme */}
-                  {currentTheme === 'extrovert' && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background: `linear-gradient(45deg, ${skill.color}20, transparent)`,
-                        borderRadius: '16px',
-                      }}
-                    />
-                  )}
-                  
-                  {/* Actual Logo */}
-                  <div 
-                    style={{
-                      width: '64px',
-                      height: '64px',
-                      marginBottom: '16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative',
-                      zIndex: 1,
-                    }}
-                  >
-                    <img
-                      src={skill.logoUrl}
-                      alt={`${skill.name} logo`}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
-                      }}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent) {
-                          parent.innerHTML = `<div style="font-size: 32px; font-weight: bold; color: ${skill.color};">${skill.name.charAt(0)}</div>`;
-                        }
-                      }}
-                    />
-                  </div>
-                  
-                  {/* Skill name */}
-                  <h3 
-                    style={{
-                      fontSize: '18px',
-                      fontWeight: currentTheme === 'extrovert' ? '900' : '700',
-                      marginBottom: '8px',
-                      textAlign: 'center',
-                      color: theme.colors.text,
-                      position: 'relative',
-                      zIndex: 1,
-                      textTransform: currentTheme === 'extrovert' ? 'uppercase' : 'none',
-                    }}
-                  >
-                    {skill.name}
-                  </h3>
-                  
-                  {/* Category badge */}
-                  <span 
-                    style={{
-                      fontSize: '12px',
-                      padding: currentTheme === 'extrovert' ? '6px 16px' : '4px 12px',
-                      borderRadius: '20px',
-                      backgroundColor: currentTheme === 'minimalist' 
-                        ? theme.colors.surface 
-                        : `${skill.color}20`,
-                      color: currentTheme === 'minimalist' 
-                        ? theme.colors.textSecondary 
-                        : skill.color,
-                      fontWeight: currentTheme === 'extrovert' ? '800' : '600',
-                      border: `1px solid ${skill.color}40`,
-                      position: 'relative',
-                      zIndex: 1,
-                      textTransform: currentTheme === 'extrovert' ? 'uppercase' : 'none',
-                    }}
-                  >
-                    {skill.category}
-                  </span>
-                  
-                  {/* Theme-specific decorative elements - removed non-existent themes */}
-                </div>
-              </div>
-            ))
-          ))}
-        </div>
-      </div>
+        {items.map((item, idx) => (
+          <li
+            className={`w-[160px] sm:w-[210px] md:w-[280px] max-w-full relative rounded-[3rem] border-4 border-transparent flex-shrink-0 px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ${item.color} ${item.textColor}`}
+            key={item.name + idx}
+          >
+            <div className="flex flex-col items-center justify-center text-center gap-2 h-full">
+              <span className="text-lg sm:text-2xl md:text-3xl font-black tracking-tight">{item.name}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <style dangerouslySetInnerHTML={{__html: `
+        .animate-scroll {
+          animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+        }
+        @keyframes scroll {
+          to {
+            transform: translate(calc(-50% - 0.75rem));
+          }
+        }
+      `}} />
     </div>
   );
 };
