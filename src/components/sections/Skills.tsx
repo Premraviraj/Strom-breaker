@@ -25,7 +25,6 @@ const aiSkills = [
   { name: "TensorFlow", level: 75, color: "bg-[#0038FF]", textColor: "text-white" },
   { name: "OpenCV", level: 85, color: "bg-[#062314]", textColor: "text-white" },
   { name: "NLP", level: 80, color: "bg-white", textColor: "text-[#062314]" },
-  { name: "LangChain", level: 70, color: "bg-[#FF3B30]", textColor: "text-white" },
 ];
 
 const Skills = () => {

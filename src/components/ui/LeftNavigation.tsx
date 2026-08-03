@@ -10,7 +10,6 @@ const sections = [
   { id: "timeline",   icon: Briefcase, label: "Journey",  color: "#10b981" }, // Emerald
   { id: "experience", icon: Layers,    label: "Work",     color: "#8b5cf6" }, // Purple
   { id: "projects",   icon: Code2,     label: "Projects", color: "#eab308" }, // Gold
-  { id: "aakrit",     icon: Rocket,    label: "Aakrit",   color: "#f97316" }, // Orange
   { id: "contact",    icon: Mail,      label: "Contact",  color: "#062314" }, // Dark Green
 ];
 

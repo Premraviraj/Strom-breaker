@@ -6,6 +6,7 @@ import { ArrowDown, Code2, Rocket } from "lucide-react";
 
 const Hero = () => {
   const [isClient, setIsClient] = useState(false);
+  const [textHovered, setTextHovered] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -42,7 +43,7 @@ const Hero = () => {
       {/* Interactive Abstract Fluid Blob */}
       {isClient && (
         <motion.div
-          className="absolute pointer-events-none z-0 mix-blend-multiply filter blur-3xl opacity-70"
+          className="absolute pointer-events-none z-0 mix-blend-multiply filter blur-3xl"
           style={{
             x: springX,
             y: springY,
@@ -52,16 +53,40 @@ const Hero = () => {
             height: "60vw",
             maxWidth: "800px",
             maxHeight: "800px",
-            background: "radial-gradient(circle at center, #0038FF 0%, #FF3B30 50%, #FFE800 100%)",
-            borderRadius: "40% 60% 70% 30% / 40% 50% 60% 50%",
-            animation: "morph 8s ease-in-out infinite alternate"
           }}
-        />
+        >
+          {/* Normal Gradient (Blue, Red, Yellow) */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: "radial-gradient(circle at center, #0038FF 0%, #FF3B30 50%, #FFE800 100%)",
+              borderRadius: "40% 60% 70% 30% / 40% 50% 60% 50%",
+              animation: "morph 8s ease-in-out infinite alternate"
+            }}
+            animate={{ opacity: textHovered ? 0 : 0.7 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+          />
+          {/* Hover Gradient (Purple, Violet, Turquoise) */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: "radial-gradient(circle at center, #7C3AED 0%, #EC4899 50%, #06B6D4 100%)",
+              borderRadius: "40% 60% 70% 30% / 40% 50% 60% 50%",
+              animation: "morph 8s ease-in-out infinite alternate"
+            }}
+            animate={{ opacity: textHovered ? 0.7 : 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+          />
+        </motion.div>
       )}
 
       {/* Foreground Content */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 z-10 relative">
-        <div className="flex flex-col items-center text-center gap-6">
+        <div 
+          className="flex flex-col items-center text-center gap-6"
+          onMouseEnter={() => setTextHovered(true)}
+          onMouseLeave={() => setTextHovered(false)}
+        >
           
           <motion.div
             initial={{ y: 50, opacity: 0 }}

@@ -6,7 +6,6 @@ import Experience from "@/components/sections/Experience";
 import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
 import Timeline from "@/components/sections/Timeline";
-import Aakrit from "@/components/sections/Aakrit";
 import Contact from "@/components/sections/Contact";
 import LeftNavigation from "../components/ui/LeftNavigation";
 
@@ -34,7 +33,6 @@ export default function Home() {
         </div>
 
         {/* Full-bleed sections */}
-        <Aakrit />
         <Contact />
       </div>
     </main>
