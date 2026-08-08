@@ -19,7 +19,7 @@ const timelineItems = [
   {
     year: "Dec 2022",
     title: "Started B.Tech CSE & AI",
-    org: "SVCE, Sriperumbudur",
+    org: "SVCE, Bengaluru",
     description: "Began formal engineering journey in Computer Science and Artificial Intelligence, mastering logic and core programming concepts.",
     highlights: ["Specialisation in AI/ML", "Core CS fundamentals mastered", "First team coding projects", "Built first web applications"],
     icon: GraduationCap,
