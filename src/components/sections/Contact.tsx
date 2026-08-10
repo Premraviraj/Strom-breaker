@@ -8,7 +8,7 @@ import FadeInWhenVisible from "../animations/FadeInWhenVisible";
 const socialLinks = [
   { icon: Github, label: "GitHub", handle: "@Premraviraj", href: "https://github.com/Premraviraj", color: "#062314" },
   { icon: Linkedin, label: "LinkedIn", handle: "prem-r", href: "https://www.linkedin.com/in/prem-r-8b8337247/", color: "#0038FF" },
-  { icon: Instagram, label: "Instagram", handle: "@thenarratorwithinsomnia", href: "https://www.instagram.com/thenarratorwithinsomnia", color: "#FF3B30" },
+  { icon: Instagram, label: "Instagram", handle: "@_optimus_prem", href: "https://www.instagram.com/_optimus_prem", color: "#FF3B30" },
   { icon: Mail, label: "Email", handle: "Premraviraj0906@gmail.com", href: "mailto:Premraviraj0906@gmail.com", color: "#FFE800" },
 ];
 
